@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Mail, MessageCircle, PhoneCall } from "lucide-react";
-import { Breadcrumb, SectionTitle } from "@/components/Ui";
+import { Breadcrumb, Hl, SectionTitle } from "@/components/Ui";
 import { ContactForm } from "@/components/ContactForm";
 import { MapEmbed } from "@/components/MapEmbed";
 import { Reveal } from "@/components/Reveal";
@@ -50,7 +50,7 @@ export default function ContactPage() {
 
           <div className="mt-20 grid gap-12 lg:grid-cols-2">
             <Reveal>
-              <SectionTitle sub="Get in touch" title="Send Us A Message">
+              <SectionTitle sub="Get in touch" title={<>Send Us A <Hl>Message</Hl></>}>
                 <p>Tell us which package you need — Hotspot, Monthly or TV Binding.</p>
               </SectionTitle>
               <div className="mt-10">

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
-import { Breadcrumb, CtaBand, SectionTitle } from "@/components/Ui";
+import { Breadcrumb, CtaBand, Hl, SectionTitle } from "@/components/Ui";
 import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
-import { ServiceBoxes } from "@/components/ServiceBoxes";
+import { ServicesShowcase, Process } from "@/components/HomeSections";
 import { hotspotPlans, ksh, monthlyPlans, photos, tvPlan } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -53,18 +53,7 @@ export default function ServicesPage() {
     <>
       <Breadcrumb title="Our Services" current="Services" image={photos.antenna} />
 
-      <section className="section-space">
-        <div className="container-x">
-          <Reveal>
-            <SectionTitle sub="What we do" title="Find Perfect Network Solutions" center>
-              <p>Hotspot Services, Monthly Services and TV Binding Services.</p>
-            </SectionTitle>
-          </Reveal>
-          <div className="mt-14">
-            <ServiceBoxes />
-          </div>
-        </div>
-      </section>
+      <ServicesShowcase />
 
       {blocks.map((b, i) => (
         <section key={b.id} id={b.id} className={`section-space scroll-mt-24 ${i % 2 === 0 ? "mesh-bg" : ""}`}>
@@ -98,7 +87,7 @@ export default function ServicesPage() {
         <div className="lines-bg absolute inset-0" />
         <div className="container-x relative">
           <Reveal>
-            <SectionTitle sub="Price list" title="All SNET Packages" center light />
+            <SectionTitle sub="Price list" title={<>All SNET <Hl>Packages</Hl></>} center light />
           </Reveal>
           <div className="mt-14 grid gap-6 lg:grid-cols-3">
             {priceList.map((g, i) => (
@@ -129,6 +118,8 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+
+      <Process />
 
       <CtaBand />
     </>

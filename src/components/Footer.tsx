@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Mail, MessageCircle, Phone, PhoneCall } from "lucide-react";
 import { Logo } from "./Logo";
+import { FooterSignup } from "./FooterSignup";
 import { hotspotPlans, ksh, monthlyPlans, nav, site, tvPlan, whatsappLink } from "@/lib/site";
 
 export function Footer() {
@@ -14,6 +15,15 @@ export function Footer() {
     <footer className="relative overflow-hidden bg-navy-950 text-slate-400">
       <div className="lines-bg absolute inset-0" />
       <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-primary-500/15 blur-3xl" />
+      <div className="container-x relative pt-16">
+        <div className="flex flex-col items-start justify-between gap-6 rounded-3xl bg-gradient-to-r from-primary-600 to-primary-500 p-8 shadow-2xl shadow-primary-900/40 sm:p-10 lg:flex-row lg:items-center">
+          <div>
+            <h3 className="text-2xl text-white sm:text-3xl">Ready to get connected?</h3>
+            <p className="mt-1 text-white/80">Leave your name and number — we&apos;ll chat on WhatsApp.</p>
+          </div>
+          <FooterSignup />
+        </div>
+      </div>
       <div className="container-x relative grid gap-12 py-20 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.1fr]">
         <div>
           <Logo light className="h-14 w-auto" />
@@ -40,7 +50,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="text-lg font-semibold uppercase text-white">Our services</h4>
+          <h4 className="text-lg uppercase text-white">Our services</h4>
           <ul className="mt-6 space-y-3">
             <li><Link href="/services#hotspot" className="transition hover:pl-1 hover:text-white">Hotspot Services</Link></li>
             <li><Link href="/services#monthly" className="transition hover:pl-1 hover:text-white">Monthly Services</Link></li>
@@ -50,7 +60,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="text-lg font-semibold uppercase text-white">Company</h4>
+          <h4 className="text-lg uppercase text-white">Company</h4>
           <ul className="mt-6 space-y-3">
             {nav.map((n) => (
               <li key={n.href}>
@@ -62,7 +72,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="text-lg font-semibold uppercase text-white">Get in touch</h4>
+          <h4 className="text-lg uppercase text-white">Get in touch</h4>
           <a href={`tel:${site.phoneIntl}`} className="mt-6 flex items-center gap-4 rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 transition hover:bg-primary-500">
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-500 text-white">
               <PhoneCall className="h-5 w-5" />

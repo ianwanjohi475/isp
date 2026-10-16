@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckCircle2, Eye, Target, Zap } from "lucide-react";
-import { Breadcrumb, CtaBand, SectionTitle } from "@/components/Ui";
+import { Breadcrumb, CtaBand, Hl, SectionTitle } from "@/components/Ui";
 import { Photo } from "@/components/Photo";
 import { photos } from "@/lib/site";
 import { Reveal } from "@/components/Reveal";
 import { CountUp } from "@/components/CountUp";
 import { Faq } from "@/components/Faq";
-import { ServiceBoxes } from "@/components/ServiceBoxes";
+import { StatsBand, WhyChoose } from "@/components/HomeSections";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -31,7 +31,7 @@ export default function AboutPage() {
             </div>
           </Reveal>
           <Reveal delay={120}>
-            <SectionTitle sub="About SNET Networks" title="Bringing The World Closer To Our Communities">
+            <SectionTitle sub="About SNET Networks" title={<>Bringing The World Closer To Our <Hl>Communities</Hl></>}>
               <p>
                 In SNET Networks, we believe everyone deserves access to the internet, no matter where they live. That&apos;s why
                 we bring affordable and reliable Wi-Fi closer to people in rural areas, markets, entertainment joints, Education
@@ -76,7 +76,7 @@ export default function AboutPage() {
       <section id="mission" className="section-space mesh-bg scroll-mt-24">
         <div className="container-x">
           <Reveal>
-            <SectionTitle sub="What drives us" title="Our Mission & Vision" center />
+            <SectionTitle sub="What drives us" title={<>Our Mission &amp; <Hl>Vision</Hl></>} center />
           </Reveal>
           <div className="mt-14 grid gap-7 lg:grid-cols-2">
             <Reveal>
@@ -108,16 +108,9 @@ export default function AboutPage() {
 
       <CtaBand />
 
-      <section className="section-space">
-        <div className="container-x">
-          <Reveal>
-            <SectionTitle sub="What we offer" title="Fast. Stable. Reliable." center />
-          </Reveal>
-          <div className="mt-14">
-            <ServiceBoxes />
-          </div>
-        </div>
-      </section>
+      <WhyChoose />
+
+      <StatsBand />
 
       <section className="section-space bg-soft">
         <div className="container-x grid gap-14 lg:grid-cols-[1fr_1.3fr]">

@@ -1,10 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter";
-import "@fontsource-variable/sora";
+import "@fontsource-variable/plus-jakarta-sans";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { ScrollTop } from "@/components/ScrollTop";
+import { Preloader } from "@/components/Preloader";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -32,10 +34,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
+        <Preloader />
         <Navbar />
         <main>{children}</main>
         <Footer />
         <WhatsAppFloat />
+        <ScrollTop />
       </body>
     </html>
   );

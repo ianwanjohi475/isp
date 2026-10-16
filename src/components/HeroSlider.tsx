@@ -3,7 +3,7 @@
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight, PhoneCall, Wifi } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, House, PhoneCall, Tv, Wifi } from "lucide-react";
 import { site } from "@/lib/site";
 
 export type Slide = {
@@ -19,6 +19,17 @@ export type Slide = {
 };
 
 const DURATION = 7000;
+
+const widget = [
+  { icon: Wifi, name: "Hotspot · 1 Hour to 24 Hours", price: "From KSh 10", href: "/packages#hotspot" },
+  { icon: House, name: "Monthly · 8 to 15 Mbps", price: "From KSh 1,500", href: "/packages#monthly" },
+  { icon: Tv, name: "TV Binding · 8 Mbps", price: "KSh 499 / month", href: "/packages#tv" },
+];
+
+/** Split a title so the last two words can be highlighted. */
+const words = (t: string) => t.split(" ");
+const head = (t: string) => words(t).slice(0, -2).join(" ");
+const tail = (t: string) => words(t).slice(-2).join(" ");
 
 export function HeroSlider({ slides }: { slides: Slide[] }) {
   const [i, setI] = useState(0);
@@ -60,25 +71,64 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
           />
         </div>
       ))}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/95 via-navy-950/75 to-navy-950/10" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/95 via-navy-950/70 to-navy-950/30" />
+      <div className="absolute inset-x-0 top-0 -z-10 h-56 bg-gradient-to-b from-navy-950/80 to-transparent" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950/70 via-transparent to-transparent" />
 
-      <div className="container-x flex min-h-[640px] flex-col justify-center pb-52 pt-14 sm:pb-40 sm:pt-16 sm:min-h-[700px] lg:min-h-[760px]">
+      <div className="container-x grid min-h-[720px] items-center gap-12 pb-52 pt-36 sm:min-h-[800px] sm:pb-44 sm:pt-44 lg:min-h-[860px] lg:grid-cols-[1.35fr_1fr]">
         <div key={i} className="max-w-2xl">
-          <p className="animate-fade-up inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-white">
+          <p className="animate-fade-up inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-white">
             <Wifi className="h-3.5 w-3.5 text-sky-brand" /> {s.tag}
           </p>
-          <h1 className="animate-fade-up mt-6 text-[40px] font-semibold leading-[1.08] text-white [animation-delay:120ms] sm:text-6xl xl:text-[76px]">
-            {s.title}
+          <h1 className="animate-fade-up mt-6 text-[40px] font-extrabold leading-[1.06] text-white [animation-delay:120ms] sm:text-6xl xl:text-[74px]">
+            {head(s.title)} <span className="bg-gradient-to-r from-sky-brand to-primary-300 bg-clip-text text-transparent">{tail(s.title)}</span>
           </h1>
           <p className="animate-fade-up mt-6 max-w-lg text-lg text-slate-200 [animation-delay:240ms]">{s.text}</p>
           <p className="animate-fade-up mt-7 flex items-baseline gap-2 [animation-delay:360ms]">
-            <span className="text-5xl font-semibold text-sky-brand sm:text-6xl">{s.price}</span>
+            <span className="font-display text-5xl font-extrabold text-white sm:text-6xl">{s.price}</span>
             <span className="text-slate-300">/{s.per}</span>
           </p>
           <div className="animate-fade-up mt-9 flex flex-wrap gap-4 [animation-delay:480ms]">
-            <Link href={s.href} className="btn-primary hover:bg-white hover:text-navy-900">Get started</Link>
+            <Link href={s.href} className="btn-primary hover:bg-white hover:text-navy-900">
+              Get started <ArrowRight className="h-4 w-4" />
+            </Link>
             <Link href="/packages" className="btn-light">All packages</Link>
+          </div>
+        </div>
+
+        {/* glass price widget */}
+        <div className="relative hidden justify-self-end lg:block">
+          <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-80 w-80 -translate-x-1/2 -translate-y-1/2">
+            <span className="absolute inset-0 animate-wave rounded-full border-2 border-sky-brand/40" />
+            <span className="absolute inset-0 animate-wave rounded-full border-2 border-sky-brand/30 [animation-delay:0.8s]" />
+            <span className="absolute inset-0 animate-wave rounded-full border-2 border-sky-brand/20 [animation-delay:1.6s]" />
+          </div>
+          <div className="glass w-[360px] animate-float rounded-3xl p-7 shadow-2xl shadow-black/30">
+            <div className="flex items-center justify-between">
+              <p className="font-display text-lg font-bold text-white">Our Packages</p>
+              <span className="flex items-center gap-1.5 rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Online
+              </span>
+            </div>
+            <ul className="mt-5 space-y-3">
+              {widget.map((w) => {
+                const Icon = w.icon;
+                return (
+                  <li key={w.name}>
+                    <Link href={w.href} className="group flex items-center gap-4 rounded-2xl bg-white/5 p-3.5 ring-1 ring-white/10 transition hover:bg-white/15">
+                      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-500 text-white transition group-hover:bg-sky-brand">
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <span className="flex-1">
+                        <span className="block text-sm text-slate-300">{w.name}</span>
+                        <span className="block font-display font-bold text-white">{w.price}</span>
+                      </span>
+                      <ArrowRight className="h-4 w-4 text-white/60 transition group-hover:translate-x-1 group-hover:text-white" />
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
       </div>
@@ -110,7 +160,7 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
               ))}
             </div>
           </div>
-          <a href={`tel:${site.phoneIntl}`} className="glass hidden items-center gap-4 rounded-full py-2.5 pl-2.5 pr-8 transition hover:bg-white/20 sm:flex">
+          <a href={`tel:${site.phoneIntl}`} className="glass hidden items-center gap-4 rounded-full py-2.5 pl-2.5 pr-8 transition hover:bg-white/20 lg:flex">
             <span className="relative flex h-12 w-12 items-center justify-center rounded-full bg-primary-500 text-white">
               <span className="absolute inset-0 animate-ping-slow rounded-full bg-primary-500" />
               <PhoneCall className="relative h-5 w-5" />

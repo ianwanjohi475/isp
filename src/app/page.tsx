@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Gauge, House, PhoneCall, Tv, Wifi, Zap } from "lucide-react";
 import { HeroSlider } from "@/components/HeroSlider";
-import { BundleCard, ColorPlanCard, PhotoPlanCard } from "@/components/Cards";
+import { PhotoPlanCard } from "@/components/Cards";
+import { Marquee } from "@/components/Marquee";
+import { PricingTabs } from "@/components/PricingTabs";
+import { AboutIntro, Process, StatsBand, WhyChoose } from "@/components/HomeSections";
 import { CoverageMap } from "@/components/CoverageMap";
 import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
-import { SectionTitle, CtaBand } from "@/components/Ui";
-import { ServiceBoxes } from "@/components/ServiceBoxes";
-import { CountUp } from "@/components/CountUp";
+import { Hl, SectionTitle, CtaBand } from "@/components/Ui";
 import { Faq } from "@/components/Faq";
 import { hotspotPlans, ksh, monthlyPlans, photos, planMessage, site, tvPlan, whatsappLink } from "@/lib/site";
 
@@ -16,13 +17,6 @@ const quick = [
   { icon: House, label: "Monthly Services", value: `From ${ksh(1500)}`, note: "8, 10 & 15 Mbps", href: "/packages#monthly" },
   { icon: Tv, label: "TV Binding", value: `${ksh(499)}/mo`, note: "8 Mbps", href: "/packages#tv" },
   { icon: PhoneCall, label: "Call us", value: site.phone, note: "Get connected today", href: `tel:${site.phoneIntl}` },
-];
-
-const speeds = [
-  { label: "1 Hour hotspot", mbps: 6 },
-  { label: "3 & 12 Hours hotspot", mbps: 8 },
-  { label: "24 Hours hotspot", mbps: 10 },
-  { label: "Monthly — top package", mbps: 15 },
 ];
 
 export default function Home() {
@@ -91,11 +85,15 @@ export default function Home() {
         </div>
       </section>
 
+      <AboutIntro />
+
+      <Marquee />
+
       {/* PLANS */}
-      <section className="section-space mesh-bg -mt-16 pt-36 lg:pt-40">
+      <section className="section-space mesh-bg">
         <div className="container-x">
           <Reveal>
-            <SectionTitle sub="Our packages" title={<>Discover Our Best <br className="hidden sm:block" />Value Plans</>} center />
+            <SectionTitle sub="Our services" title={<>Discover Our Best <Hl>Value Plans</Hl></>} center />
           </Reveal>
           <div className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
             <Reveal>
@@ -135,97 +133,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section className="section-space overflow-hidden">
-        <div className="container-x grid items-center gap-16 lg:grid-cols-2">
-          <Reveal className="relative pb-16 pr-6 sm:pr-16">
-            <Photo src={photos.village} alt="Village connected by SNET Networks" className="aspect-[4/3.6] rounded-2xl shadow-[0_30px_60px_-20px_rgba(11,27,63,0.35)]" />
-            <div className="absolute bottom-0 right-0 w-[52%] animate-float overflow-hidden rounded-2xl border-[6px] border-white shadow-2xl">
-              <Photo src={photos.wifiDashboard} alt="SNET hotspot connection illustration" className="aspect-[3/2]" sizes="300px" />
-            </div>
-            <div className="absolute -left-2 top-8 flex items-center gap-3 rounded-2xl bg-white px-5 py-4 shadow-xl sm:-left-6">
-              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary-500 text-white">
-                <Zap className="h-5 w-5" />
-              </span>
-              <span>
-                <span className="block text-2xl font-semibold leading-none text-navy-900">15 Mbps</span>
-                <span className="text-xs text-body">Top monthly speed</span>
-              </span>
-            </div>
-          </Reveal>
-          <Reveal delay={120}>
-            <SectionTitle sub={site.mantra} title="Experience The Features Of SNET Networks">
-              <p>
-                We bring affordable and reliable Wi-Fi closer to people in rural areas, markets, entertainment joints and education
-                centres, helping communities stay connected to the world.
-              </p>
+      {/* PRICING */}
+      <section className="section-space relative overflow-hidden">
+        <div className="dots-bg absolute right-0 top-10 h-72 w-72 opacity-60" />
+        <div className="container-x relative">
+          <Reveal>
+            <SectionTitle sub="Pricing plans" title={<>Choose Your <Hl>Perfect</Hl> Package</>} center>
+              <p>Hotspot from KSh 10, Monthly from KSh 1,500 and TV Binding at KSh 499 per month.</p>
             </SectionTitle>
-            <div className="mt-9 grid grid-cols-3 gap-4">
-              {[
-                { n: 24, s: "Hrs", l: "Longest hotspot" },
-                { n: 15, s: "Mbps", l: "Top speed" },
-                { n: 3, s: "", l: "Service types" },
-              ].map((c) => (
-                <div key={c.l} className="rounded-2xl bg-soft p-4 text-center transition hover:bg-primary-50 sm:p-5">
-                  <p className="text-[30px] font-semibold leading-none text-primary-500 sm:text-[36px]">
-                    <CountUp to={c.n} />
-                    <span className="text-lg"> {c.s}</span>
-                  </p>
-                  <p className="mt-2 text-sm text-navy-900">{c.l}</p>
-                </div>
-              ))}
-            </div>
-            <div className="mt-9 space-y-5">
-              {speeds.map((sp) => (
-                <div key={sp.label}>
-                  <div className="mb-2 flex justify-between text-sm font-medium text-navy-900">
-                    <span>{sp.label}</span>
-                    <span className="text-primary-500">{sp.mbps} Mbps</span>
-                  </div>
-                  <div className="h-2.5 overflow-hidden rounded-full bg-primary-50">
-                    <div className="bar h-full rounded-full bg-gradient-to-r from-primary-500 to-sky-brand" style={{ width: `${(sp.mbps / 15) * 100}%` }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-            <Link href="/packages" className="btn-primary mt-10">Try hotspot now</Link>
+          </Reveal>
+          <Reveal className="mt-10">
+            <PricingTabs />
           </Reveal>
         </div>
       </section>
 
-      {/* HOTSPOT PACKAGES */}
-      <section className="section-space relative overflow-hidden bg-gradient-to-b from-primary-50 to-white">
-        <div className="dots-bg absolute left-0 top-0 h-72 w-72 opacity-60" />
-        <div className="dots-bg absolute bottom-0 right-0 h-72 w-72 opacity-60" />
-        <div className="container-x relative">
-          <Reveal>
-            <SectionTitle sub="Hotspot services" title="Pick Your Hotspot Package" center>
-              <p>From 1 Hour to 24 Hours — speeds from 6 Mbps to 10 Mbps.</p>
-            </SectionTitle>
-          </Reveal>
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {hotspotPlans.map((p, i) => (
-              <Reveal key={p.id} delay={i * 90}>
-                <BundleCard plan={p} featured={p.id === "hs-24h"} />
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <StatsBand />
 
-      {/* SERVICES */}
-      <section className="section-space relative isolate overflow-hidden bg-navy-950">
-        <Photo src={photos.antenna} alt="" className="!absolute inset-0 -z-10 opacity-20" sizes="100vw" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-navy-950 via-navy-950/90 to-navy-900" />
-        <div className="container-x relative">
-          <Reveal>
-            <SectionTitle sub="Our services" title={<>Find Perfect Network <br className="hidden sm:block" />Solutions</>} center light />
-          </Reveal>
-          <div className="mt-14">
-            <ServiceBoxes dark />
-          </div>
-        </div>
-      </section>
+      <WhyChoose />
 
       {/* SPECIAL OFFER */}
       <section className="section-space overflow-hidden">
@@ -245,7 +170,7 @@ export default function Home() {
             </div>
           </Reveal>
           <Reveal delay={120}>
-            <SectionTitle sub="24 Hours hotspot" title="24 Hours Of Internet For Only KSh 50">
+            <SectionTitle sub="Special offer" title={<>24 Hours Of Internet For Only <Hl>KSh 50</Hl></>}>
               <p>
                 Our 24 Hours hotspot package gives you 10 Mbps internet for a full day at only KSh 50. Other hotspot packages start
                 from KSh 10 for 1 Hour.
@@ -270,23 +195,7 @@ export default function Home() {
 
       <CtaBand />
 
-      {/* MONTHLY */}
-      <section className="section-space mesh-bg">
-        <div className="container-x">
-          <Reveal>
-            <SectionTitle sub="Monthly services" title="Monthly Internet Packages" center>
-              <p>Choose 8 Mbps, 10 Mbps or 15 Mbps — paid per month.</p>
-            </SectionTitle>
-          </Reveal>
-          <div className="mt-14 grid gap-7 md:grid-cols-3">
-            {monthlyPlans.map((p, i) => (
-              <Reveal key={p.id} delay={i * 100}>
-                <ColorPlanCard plan={p} index={i} />
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Process />
 
       {/* TV */}
       <section className="section-space overflow-hidden">
@@ -304,7 +213,7 @@ export default function Home() {
             </div>
           </Reveal>
           <Reveal delay={120}>
-            <SectionTitle sub="TV binding services" title="Enjoy Sports, Movies, TV Shows & More">
+            <SectionTitle sub="TV binding services" title={<>Enjoy Sports, Movies, TV Shows &amp; <Hl>More</Hl></>}>
               <p>Get TV Binding from SNET Networks at 8 Mbps for only KSh 499 per month.</p>
             </SectionTitle>
             <div className="mt-8 grid grid-cols-2 gap-4">
@@ -337,7 +246,7 @@ export default function Home() {
       <section className="section-space bg-soft">
         <div className="container-x grid gap-14 lg:grid-cols-2">
           <Reveal>
-            <SectionTitle sub="FAQ" title="Frequently Asked Questions" className="mb-10" />
+            <SectionTitle sub="FAQ" title={<>Frequently Asked <Hl>Questions</Hl></>} className="mb-10" />
             <Faq />
           </Reveal>
           <Reveal delay={120} className="lg:pt-24">

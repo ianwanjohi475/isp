@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { BundleCard, ColorPlanCard } from "@/components/Cards";
-import { Breadcrumb, CtaBand, SectionTitle } from "@/components/Ui";
+import { PriceCard } from "@/components/PriceCard";
+import { Breadcrumb, CtaBand, Hl, SectionTitle } from "@/components/Ui";
 import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
 import { Faq } from "@/components/Faq";
@@ -19,14 +19,14 @@ export default function PackagesPage() {
       <section id="hotspot" className="section-space scroll-mt-24">
         <div className="container-x">
           <Reveal>
-            <SectionTitle sub="Hotspot services" title="Let's Discover Our Hotspot Packages" center>
+            <SectionTitle sub="Hotspot services" title={<>Let&apos;s Discover Our <Hl>Hotspot</Hl> Packages</>} center>
               <p>Choose a hotspot package from 1 Hour to 24 Hours.</p>
             </SectionTitle>
           </Reveal>
-          <div className="mt-16 grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-16 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
             {hotspotPlans.map((p, i) => (
               <Reveal key={p.id} delay={i * 90}>
-                <BundleCard plan={p} featured={p.id === "hs-24h"} />
+                <PriceCard plan={p} kind="hotspot" featured={p.id === "hs-24h"} ribbon={p.id === "hs-24h" ? "Full day" : undefined} />
               </Reveal>
             ))}
           </div>
@@ -36,14 +36,14 @@ export default function PackagesPage() {
       <section id="monthly" className="section-space mesh-bg scroll-mt-24">
         <div className="container-x">
           <Reveal>
-            <SectionTitle sub="Monthly services" title="Monthly Packages" center>
+            <SectionTitle sub="Monthly services" title={<>Monthly <Hl>Packages</Hl></>} center>
               <p>8 Mbps, 10 Mbps and 15 Mbps — paid per month.</p>
             </SectionTitle>
           </Reveal>
           <div className="mt-14 grid gap-7 md:grid-cols-3">
             {monthlyPlans.map((p, i) => (
               <Reveal key={p.id} delay={i * 90}>
-                <ColorPlanCard plan={p} index={i} />
+                <PriceCard plan={p} kind="monthly" featured={p.id === "m-15"} ribbon={p.id === "m-15" ? "Top speed" : undefined} />
               </Reveal>
             ))}
           </div>
