@@ -28,7 +28,7 @@ Everything (prices, speeds, phone, email, map location) lives in **`src/lib/site
 
 ## Graphics
 
-See **`GRAPHIC-PROMPTS.md`** for a ChatGPT prompt (flat 2D style) for every graphic on the site.
+See **`IMAGE-PROMPTS.md`** for a professional, realistic ChatGPT prompt for every image on the site.
 Save each generated image into `public/photos/` with the exact file name from that list
 (e.g. `public/photos/hero-hotspot.png` — .png, .jpg or .webp) and redeploy — the site uses it automatically.
 Until a file exists, the built-in 2D graphic is shown in its place.

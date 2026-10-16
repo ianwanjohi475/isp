@@ -60,7 +60,7 @@ export const nav = [
 /**
  * Graphics. Save each image into /public/photos/ with this file name (.png, .jpg or .webp)
  * and the site uses it automatically on the next build. Until a file exists, the built-in
- * drawn graphic shows. See GRAPHIC-PROMPTS.md for the prompt to generate each one.
+ * drawn graphic shows. See IMAGE-PROMPTS.md for the prompt to generate each one.
  */
 export const photos = {
   heroHotspot: "hero-hotspot",
