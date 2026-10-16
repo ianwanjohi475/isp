@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Sora Variable", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink-950: #040b1f;
+  --color-ink-900: #081433;
+  --color-ink-800: #0e1f4a;
+  --color-ink-700: #1a2e63;
+
+  --color-brand-50: #eef4ff;
+  --color-brand-100: #dce8ff;
+  --color-brand-200: #b6ceff;
+  --color-brand-300: #82abff;
+  --color-brand-400: #4d84ff;
+  --color-brand-500: #2563ff;
+  --color-brand-600: #134be6;
+  --color-brand-700: #0f3bb8;
+  --color-brand-800: #112f8a;
+
+  --color-signal-300: #7ee8fa;
+  --color-signal-400: #38d6f5;
+  --color-signal-500: #10bde3;
+
+  --color-spark-400: #ffc24b;
+  --color-spark-500: #ffab1a;
+
+  --animate-ping-slow: ping-slow 3.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-spin-slow: spin 40s linear infinite;
+  --animate-dash: dash 3s linear infinite;
+
+  @keyframes ping-slow {
+    0% { transform: scale(0.55); opacity: 0.9; }
+    100% { transform: scale(1.35); opacity: 0; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  @keyframes dash {
+    to { stroke-dashoffset: -40; }
+  }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-white text-slate-700 antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display text-ink-900 tracking-tight;
+  }
+  ::selection { @apply bg-brand-500 text-white; }
+}
+
+@utility container-x {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+@utility text-gradient {
+  @apply bg-gradient-to-r from-brand-400 via-signal-400 to-brand-300 bg-clip-text text-transparent;
+}
+
+@utility grid-bg {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+@utility dot-bg {
+  background-image: radial-gradient(rgb(37 99 255 / 0.14) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation: none !important; }
+}

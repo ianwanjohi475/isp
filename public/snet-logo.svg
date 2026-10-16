@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 96">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563ff"/><stop offset="1" stop-color="#0b2577"/></linearGradient>
+  </defs>
+  <g transform="translate(8 8) scale(1.25)">
+    <rect width="64" height="64" rx="18" fill="url(#bg)"/>
+    <path d="M38 20.5 A 8.5 8.5 0 1 0 29.5 29 H34.5 A 8.5 8.5 0 1 1 26 37.5" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" transform="translate(0.5 -1.5)"/>
+    <circle cx="38.5" cy="19" r="4.2" fill="#38d6f5" stroke="#0b2577" stroke-width="1.6"/>
+    <circle cx="26.5" cy="36" r="4.2" fill="#38d6f5" stroke="#0b2577" stroke-width="1.6"/>
+    <path d="M45 12.5 A 9 9 0 0 1 47.5 21" fill="none" stroke="#38d6f5" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M48.5 8 A 14.5 14.5 0 0 1 52.5 22" fill="none" stroke="#38d6f5" stroke-width="2.6" stroke-linecap="round" opacity="0.6"/>
+  </g>
+  <text x="104" y="54" font-family="Sora, 'Arial Black', Arial, sans-serif" font-size="44" font-weight="800" fill="#081433" letter-spacing="-1">SNET</text>
+  <text x="106" y="80" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="700" fill="#134be6" letter-spacing="7">NETWORKS</text>
+</svg>
