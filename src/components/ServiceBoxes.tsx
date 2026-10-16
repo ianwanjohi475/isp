@@ -16,8 +16,8 @@ export function ServiceBoxes({ dark = false }: { dark?: boolean }) {
         return (
           <Reveal key={s.title} delay={i * 100}>
             <div
-              className={`group relative h-full overflow-hidden rounded-md p-9 transition duration-300 hover:-translate-y-1.5 ${
-                dark ? "bg-navy-800 text-center hover:bg-primary-500" : "border border-line bg-white hover:border-primary-500 hover:shadow-[0_20px_50px_rgba(11,27,63,0.1)]"
+              className={`card-fx top-line group relative h-full overflow-hidden rounded-2xl p-9 ${
+                dark ? "glass text-center hover:bg-primary-500/90" : "border border-line bg-white hover:border-primary-200"
               }`}
             >
               <span
@@ -25,7 +25,7 @@ export function ServiceBoxes({ dark = false }: { dark?: boolean }) {
                   dark ? "mx-auto bg-white/10 text-sky-brand group-hover:bg-white group-hover:text-primary-500" : "bg-primary-50 text-primary-500 group-hover:bg-primary-500 group-hover:text-white"
                 }`}
               >
-                <Icon className="h-8 w-8" strokeWidth={1.6} />
+                <Icon className="h-8 w-8 transition duration-500 group-hover:scale-110 group-hover:rotate-6" strokeWidth={1.6} />
               </span>
               <h3 className={`mt-7 text-[22px] ${dark ? "text-white" : ""}`}>{s.title}</h3>
               <p className={`mt-3 ${dark ? "text-slate-300 group-hover:text-white/90" : ""}`}>{s.text}</p>

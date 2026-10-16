@@ -57,20 +57,4 @@ export const nav = [
   { href: "/contact", label: "Contact" },
 ];
 
-/**
- * Graphics. Save each image into /public/photos/ with this file name (.png, .jpg or .webp)
- * and the site uses it automatically on the next build. Until a file exists, the built-in
- * drawn graphic shows. See IMAGE-PROMPTS.md for the prompt to generate each one.
- */
-export const photos = {
-  heroHotspot: "hero-hotspot",
-  heroMonthly: "hero-monthly",
-  heroTv: "hero-tv",
-  hotspot: "hotspot",
-  monthly: "monthly",
-  tv: "tv-binding",
-  community: "community",
-  offer: "offer-24-hours",
-} as const;
-
-export type PhotoSlot = keyof typeof photos;
+export { photos } from "@/assets/photos";

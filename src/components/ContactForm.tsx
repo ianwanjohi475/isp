@@ -12,7 +12,7 @@ const options = [
 ];
 
 const field =
-  "w-full rounded-md border border-line bg-white px-4 py-3 text-sm text-navy-900 outline-none transition placeholder:text-slate-400 focus:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-100";
+  "w-full rounded-xl border border-line bg-white px-4 py-3 text-sm text-navy-900 outline-none transition placeholder:text-slate-400 focus:border-primary-400 focus:bg-white focus:ring-4 focus:ring-primary-100";
 
 export function ContactForm() {
   const [sent, setSent] = useState(false);

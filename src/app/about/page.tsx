@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckCircle2, Eye, Target, Zap } from "lucide-react";
 import { Breadcrumb, CtaBand, SectionTitle } from "@/components/Ui";
-import { CommunityScene, HotspotScene } from "@/components/Scenes";
-import { Visual } from "@/components/Visual";
+import { Photo } from "@/components/Photo";
+import { photos } from "@/lib/site";
 import { Reveal } from "@/components/Reveal";
 import { CountUp } from "@/components/CountUp";
 import { Faq } from "@/components/Faq";
@@ -20,18 +20,14 @@ const reach = ["Rural areas", "Markets", "Entertainment joints", "Education cent
 export default function AboutPage() {
   return (
     <>
-      <Breadcrumb title="About Us" current="About" />
+      <Breadcrumb title="About Us" current="About" image={photos.village} />
 
       <section className="section-space">
         <div className="container-x grid items-center gap-14 lg:grid-cols-2">
           <Reveal className="relative pb-10 pr-10">
-            <Visual slot="community" alt="SNET Networks in the community" className="aspect-[4/3.6] rounded-md shadow-[0_30px_60px_rgba(11,27,63,0.15)]">
-              <CommunityScene />
-            </Visual>
-            <div className="absolute bottom-0 right-0 w-[42%] rounded-md border-8 border-white shadow-xl">
-              <Visual slot="hotspot" alt="Connecting to SNET hotspot" className="aspect-square">
-                <HotspotScene />
-              </Visual>
+            <Photo src={photos.village} alt="Village connected by SNET Networks" className="aspect-[4/3.6] rounded-2xl shadow-[0_30px_60px_-20px_rgba(11,27,63,0.35)]" />
+            <div className="absolute bottom-0 right-0 w-[44%] animate-float overflow-hidden rounded-2xl border-[6px] border-white shadow-2xl">
+              <Photo src={photos.cafeHotspot} alt="Customer using SNET hotspot" className="aspect-square" sizes="300px" imgClassName="object-[60%_center]" />
             </div>
           </Reveal>
           <Reveal delay={120}>
@@ -77,14 +73,14 @@ export default function AboutPage() {
       </section>
 
       {/* MISSION & VISION */}
-      <section id="mission" className="section-space scroll-mt-24 bg-soft">
+      <section id="mission" className="section-space mesh-bg scroll-mt-24">
         <div className="container-x">
           <Reveal>
             <SectionTitle sub="What drives us" title="Our Mission & Vision" center />
           </Reveal>
           <div className="mt-14 grid gap-7 lg:grid-cols-2">
             <Reveal>
-              <article className="group h-full rounded-md bg-white p-10 shadow-sm transition hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(11,27,63,0.12)] sm:p-12">
+              <article className="card-fx top-line group h-full overflow-hidden rounded-2xl bg-white p-10 shadow-sm sm:p-12">
                 <span className="flex h-20 w-20 items-center justify-center rounded-full bg-primary-500 text-white">
                   <Target className="h-9 w-9" strokeWidth={1.5} />
                 </span>
@@ -95,7 +91,7 @@ export default function AboutPage() {
               </article>
             </Reveal>
             <Reveal delay={120}>
-              <article className="group h-full rounded-md bg-navy-900 p-10 text-white transition hover:-translate-y-1.5 sm:p-12">
+              <article className="card-fx group h-full overflow-hidden rounded-2xl bg-navy-900 p-10 text-white sm:p-12">
                 <span className="flex h-20 w-20 items-center justify-center rounded-full bg-sky-brand text-navy-900">
                   <Eye className="h-9 w-9" strokeWidth={1.5} />
                 </span>
@@ -129,7 +125,7 @@ export default function AboutPage() {
             <SectionTitle sub="FAQ" title="Frequently Asked Questions">
               <p>Can&apos;t find your answer? Call us on 0748 349372 or email snetnetworktelecoms@gmail.com.</p>
             </SectionTitle>
-            <div className="mt-8 flex items-center gap-4 rounded-md bg-primary-500 p-6 text-white">
+            <div className="mt-8 flex items-center gap-4 rounded-2xl bg-gradient-to-r from-primary-500 to-primary-700 p-6 text-white">
               <Zap className="h-10 w-10" strokeWidth={1.5} />
               <p className="text-lg font-medium">Fast, Stable, Reliable Network</p>
             </div>

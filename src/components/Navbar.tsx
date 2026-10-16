@@ -26,21 +26,21 @@ export function Navbar() {
   return (
     <>
       {/* top info bar */}
-      <div className="hidden border-b border-line bg-white text-[13px] md:block">
+      <div className="hidden bg-navy-950 text-[13px] text-slate-300 md:block">
         <div className="container-x flex h-12 items-center justify-between">
-          <div className="flex items-center divide-x divide-line">
-            <a href={`tel:${site.phoneIntl}`} className="flex items-center gap-2 pr-6 hover:text-primary-500">
-              <Phone className="h-3.5 w-3.5 text-primary-500" /> {site.phone}
+          <div className="flex items-center divide-x divide-white/10">
+            <a href={`tel:${site.phoneIntl}`} className="flex items-center gap-2 pr-6 hover:text-white">
+              <Phone className="h-3.5 w-3.5 text-sky-brand" /> {site.phone}
             </a>
-            <a href={`mailto:${site.email}`} className="flex items-center gap-2 px-6 hover:text-primary-500">
-              <Mail className="h-3.5 w-3.5 text-primary-500" /> {site.email}
+            <a href={`mailto:${site.email}`} className="flex items-center gap-2 px-6 hover:text-white">
+              <Mail className="h-3.5 w-3.5 text-sky-brand" /> {site.email}
             </a>
             <span className="hidden items-center gap-2 px-6 lg:flex">
-              <Clock className="h-3.5 w-3.5 text-primary-500" /> Hotspot packages from KSh 10
+              <Clock className="h-3.5 w-3.5 text-sky-brand" /> Hotspot packages from KSh 10
             </span>
           </div>
-          <p className="font-medium text-navy-900">
-            Fast <span className="text-primary-500">|</span> Stable <span className="text-primary-500">|</span> Reliable Network
+          <p className="font-medium text-white">
+            Fast <span className="text-sky-brand">|</span> Stable <span className="text-sky-brand">|</span> Reliable Network
           </p>
         </div>
       </div>
@@ -52,7 +52,7 @@ export function Navbar() {
       >
         <div className="container-x flex h-[84px] items-center justify-between">
           <Link href="/" aria-label="SNET Networks home">
-            <Logo />
+            <Logo className="h-11 w-auto sm:h-12" />
           </Link>
 
           <nav className="hidden items-center gap-10 lg:flex" aria-label="Main">

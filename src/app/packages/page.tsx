@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { BundleCard, ColorPlanCard } from "@/components/Cards";
 import { Breadcrumb, CtaBand, SectionTitle } from "@/components/Ui";
-import { TvScene } from "@/components/Scenes";
-import { Visual } from "@/components/Visual";
+import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
 import { Faq } from "@/components/Faq";
-import { hotspotPlans, ksh, monthlyPlans, planMessage, tvPlan, whatsappLink } from "@/lib/site";
+import { hotspotPlans, ksh, monthlyPlans, photos, planMessage, tvPlan, whatsappLink } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Packages & Pricing",
@@ -15,7 +14,7 @@ export const metadata: Metadata = {
 export default function PackagesPage() {
   return (
     <>
-      <Breadcrumb title="Packages" current="Packages" />
+      <Breadcrumb title="Packages" current="Packages" image={photos.marketPhone} />
 
       <section id="hotspot" className="section-space scroll-mt-24">
         <div className="container-x">
@@ -34,7 +33,7 @@ export default function PackagesPage() {
         </div>
       </section>
 
-      <section id="monthly" className="section-space scroll-mt-24 bg-soft">
+      <section id="monthly" className="section-space mesh-bg scroll-mt-24">
         <div className="container-x">
           <Reveal>
             <SectionTitle sub="Monthly services" title="Monthly Packages" center>
@@ -68,16 +67,14 @@ export default function PackagesPage() {
             </a>
           </Reveal>
           <Reveal delay={100} className="mx-auto">
-            <div className="flex h-44 w-44 flex-col items-center justify-center rounded-full bg-primary-500 text-white ring-[14px] ring-primary-500/25">
+            <div className="flex h-44 w-44 animate-float flex-col items-center justify-center rounded-full bg-primary-500 text-white ring-[14px] ring-primary-500/25">
               <span className="text-sm font-medium uppercase">Only</span>
               <span className="text-4xl font-semibold">{ksh(tvPlan.price)}</span>
               <span className="text-sm font-medium uppercase">Per month</span>
             </div>
           </Reveal>
           <Reveal delay={200}>
-            <Visual slot="tv" alt="Smart TV" className="aspect-[4/3] rounded-md shadow-2xl">
-              <TvScene />
-            </Visual>
+            <Photo src={photos.tvMatch} alt="Watching football with SNET TV Binding" className="aspect-[4/3] rounded-2xl shadow-2xl ring-1 ring-white/10" />
           </Reveal>
         </div>
       </section>

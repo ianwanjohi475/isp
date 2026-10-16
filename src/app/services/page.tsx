@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 import { Breadcrumb, CtaBand, SectionTitle } from "@/components/Ui";
-import { HomeScene, HotspotScene, TvScene } from "@/components/Scenes";
-import { Visual } from "@/components/Visual";
+import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
 import { ServiceBoxes } from "@/components/ServiceBoxes";
-import { hotspotPlans, ksh, monthlyPlans, tvPlan } from "@/lib/site";
+import { hotspotPlans, ksh, monthlyPlans, photos, tvPlan } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Our Services",
@@ -21,8 +20,7 @@ const blocks = [
     text: "Affordable hotspot Wi-Fi in rural areas, markets, entertainment joints and education centres. Choose a package from 1 Hour to 24 Hours.",
     points: hotspotPlans.map((p) => `${p.period} · ${p.speed} Mbps — ${ksh(p.price)}`),
     from: `From ${ksh(hotspotPlans[0].price)}`,
-    slot: "hotspot" as const,
-    scene: <HotspotScene />,
+    image: photos.marketPhone,
   },
   {
     id: "monthly",
@@ -31,8 +29,7 @@ const blocks = [
     text: "Monthly internet packages at 8 Mbps, 10 Mbps and 15 Mbps.",
     points: monthlyPlans.map((p) => `${p.speed} Mbps — ${ksh(p.price)} per month`),
     from: `From ${ksh(monthlyPlans[0].price)}`,
-    slot: "monthly" as const,
-    scene: <HomeScene />,
+    image: photos.family,
   },
   {
     id: "tv",
@@ -41,8 +38,7 @@ const blocks = [
     text: "TV Binding at 8 Mbps for KSh 499 per month.",
     points: [`TV Binding — ${tvPlan.speed} Mbps`, `${ksh(tvPlan.price)} per month`],
     from: `${ksh(tvPlan.price)} / month`,
-    slot: "tv" as const,
-    scene: <TvScene />,
+    image: photos.tvMatch,
   },
 ];
 
@@ -55,7 +51,7 @@ const priceList = [
 export default function ServicesPage() {
   return (
     <>
-      <Breadcrumb title="Our Services" current="Services" />
+      <Breadcrumb title="Our Services" current="Services" image={photos.antenna} />
 
       <section className="section-space">
         <div className="container-x">
@@ -71,14 +67,12 @@ export default function ServicesPage() {
       </section>
 
       {blocks.map((b, i) => (
-        <section key={b.id} id={b.id} className={`section-space scroll-mt-24 ${i % 2 === 0 ? "bg-soft" : ""}`}>
+        <section key={b.id} id={b.id} className={`section-space scroll-mt-24 ${i % 2 === 0 ? "mesh-bg" : ""}`}>
           <div className="container-x grid items-center gap-14 lg:grid-cols-2">
             <Reveal className={i % 2 ? "lg:order-2" : ""}>
               <div className="relative">
-                <Visual slot={b.slot} alt={b.title} className="aspect-[4/3] rounded-md shadow-[0_30px_60px_rgba(11,27,63,0.15)]">
-                  {b.scene}
-                </Visual>
-                <span className="absolute -bottom-6 left-8 rounded-md bg-primary-500 px-6 py-4 text-lg font-medium text-white shadow-xl">
+                <Photo src={b.image} alt={b.title} className="aspect-[4/3] rounded-2xl shadow-[0_30px_60px_-20px_rgba(11,27,63,0.4)]" />
+                <span className="absolute -bottom-6 left-8 animate-float rounded-2xl bg-primary-500 px-6 py-4 text-lg font-semibold text-white shadow-xl">
                   {b.from}
                 </span>
               </div>
@@ -109,7 +103,7 @@ export default function ServicesPage() {
           <div className="mt-14 grid gap-6 lg:grid-cols-3">
             {priceList.map((g, i) => (
               <Reveal key={g.group} delay={i * 100}>
-                <div className="h-full rounded-md bg-navy-800 p-8">
+                <div className="card-fx glass h-full rounded-2xl p-8">
                   <h3 className="text-xl text-white">{g.group}</h3>
                   <table className="mt-5 w-full text-left text-[15px]">
                     <thead>

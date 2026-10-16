@@ -5,97 +5,85 @@ import { hotspotPlans, ksh, monthlyPlans, nav, site, tvPlan, whatsappLink } from
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const social = [
+    { href: whatsappLink("Hi SNET Networks 👋"), label: "WhatsApp", icon: MessageCircle, ext: true },
+    { href: `mailto:${site.email}`, label: "Email", icon: Mail },
+    { href: `tel:${site.phoneIntl}`, label: "Phone", icon: Phone },
+  ];
   return (
-    <footer className="bg-soft">
-      <div className="container-x grid lg:grid-cols-[1.3fr_1fr_1fr_1.1fr]">
-        <div className="border-line py-16 lg:border-r lg:pr-12">
-          <Logo />
-          <div className="mt-8 flex items-center gap-4">
-            <span className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-500 text-white">
-              <PhoneCall className="h-6 w-6" />
-            </span>
-            <div>
-              <p className="text-sm">Call us</p>
-              <a href={`tel:${site.phoneIntl}`} className="text-xl font-semibold text-navy-900 hover:text-primary-500">
-                {site.phone}
-              </a>
-            </div>
-          </div>
-          <h4 className="mt-8 text-lg">Contact info</h4>
-          <a href={`mailto:${site.email}`} className="mt-1 block break-all hover:text-primary-500">
-            {site.email}
-          </a>
-          <div className="mt-6 flex gap-3">
-            <a
-              href={whatsappLink("Hi SNET Networks 👋")}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="WhatsApp"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-navy-900 shadow-sm transition hover:bg-primary-500 hover:text-white"
-            >
-              <MessageCircle className="h-4 w-4" />
-            </a>
-            <a
-              href={`mailto:${site.email}`}
-              aria-label="Email"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-navy-900 shadow-sm transition hover:bg-primary-500 hover:text-white"
-            >
-              <Mail className="h-4 w-4" />
-            </a>
-            <a
-              href={`tel:${site.phoneIntl}`}
-              aria-label="Phone"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-navy-900 shadow-sm transition hover:bg-primary-500 hover:text-white"
-            >
-              <Phone className="h-4 w-4" />
-            </a>
+    <footer className="relative overflow-hidden bg-navy-950 text-slate-400">
+      <div className="lines-bg absolute inset-0" />
+      <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-primary-500/15 blur-3xl" />
+      <div className="container-x relative grid gap-12 py-20 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.1fr]">
+        <div>
+          <Logo light className="h-14 w-auto" />
+          <p className="mt-6 max-w-sm">
+            Bringing affordable and reliable Wi-Fi closer to people in rural areas, markets, entertainment joints and education centres.
+          </p>
+          <div className="mt-7 flex gap-3">
+            {social.map((s) => {
+              const Icon = s.icon;
+              return (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  aria-label={s.label}
+                  target={s.ext ? "_blank" : undefined}
+                  rel={s.ext ? "noopener noreferrer" : undefined}
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-white/5 text-white ring-1 ring-white/10 transition hover:-translate-y-1 hover:bg-primary-500"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              );
+            })}
           </div>
         </div>
 
-        <div className="border-line py-16 lg:border-r lg:px-12">
-          <h4 className="text-lg uppercase">Our services</h4>
+        <div>
+          <h4 className="text-lg font-semibold uppercase text-white">Our services</h4>
           <ul className="mt-6 space-y-3">
-            <li><Link href="/services#hotspot" className="hover:text-primary-500">Hotspot Services</Link></li>
-            <li><Link href="/services#monthly" className="hover:text-primary-500">Monthly Services</Link></li>
-            <li><Link href="/services#tv" className="hover:text-primary-500">TV Binding Services</Link></li>
-            <li><Link href="/contact" className="hover:text-primary-500">Contact Us</Link></li>
+            <li><Link href="/services#hotspot" className="transition hover:pl-1 hover:text-white">Hotspot Services</Link></li>
+            <li><Link href="/services#monthly" className="transition hover:pl-1 hover:text-white">Monthly Services</Link></li>
+            <li><Link href="/services#tv" className="transition hover:pl-1 hover:text-white">TV Binding Services</Link></li>
+            <li><Link href="/packages" className="transition hover:pl-1 hover:text-white">All Packages</Link></li>
           </ul>
         </div>
 
-        <div className="border-line py-16 lg:border-r lg:px-12">
-          <h4 className="text-lg uppercase">About company</h4>
+        <div>
+          <h4 className="text-lg font-semibold uppercase text-white">Company</h4>
           <ul className="mt-6 space-y-3">
             {nav.map((n) => (
               <li key={n.href}>
-                <Link href={n.href} className="hover:text-primary-500">{n.label === "Home" ? "Home" : n.label === "About" ? "About Company" : n.label}</Link>
+                <Link href={n.href} className="transition hover:pl-1 hover:text-white">{n.label === "About" ? "About Us" : n.label}</Link>
               </li>
             ))}
-            <li><Link href="/about#mission" className="hover:text-primary-500">Mission & Vision</Link></li>
+            <li><Link href="/about#mission" className="transition hover:pl-1 hover:text-white">Mission &amp; Vision</Link></li>
           </ul>
         </div>
 
-        <div className="py-16 lg:pl-12">
-          <h4 className="text-lg uppercase">Price list</h4>
-          <ul className="mt-6 space-y-4 text-sm">
-            <li>
-              <span className="block">Hotspot</span>
-              <span className="font-medium text-navy-900">From {ksh(hotspotPlans[0].price)} / hour</span>
-            </li>
-            <li>
-              <span className="block">Monthly internet</span>
-              <span className="font-medium text-navy-900">From {ksh(monthlyPlans[0].price)} / month</span>
-            </li>
-            <li>
-              <span className="block">TV Binding</span>
-              <span className="font-medium text-primary-500">{ksh(tvPlan.price)} / month</span>
-            </li>
+        <div>
+          <h4 className="text-lg font-semibold uppercase text-white">Get in touch</h4>
+          <a href={`tel:${site.phoneIntl}`} className="mt-6 flex items-center gap-4 rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 transition hover:bg-primary-500">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-500 text-white">
+              <PhoneCall className="h-5 w-5" />
+            </span>
+            <span>
+              <span className="block text-sm">Call us</span>
+              <span className="block text-lg font-semibold text-white">{site.phone}</span>
+            </span>
+          </a>
+          <a href={`mailto:${site.email}`} className="mt-4 block break-all text-sm hover:text-white">{site.email}</a>
+          <ul className="mt-5 space-y-1.5 text-sm">
+            <li>Hotspot from <span className="font-semibold text-white">{ksh(hotspotPlans[0].price)}</span></li>
+            <li>Monthly from <span className="font-semibold text-white">{ksh(monthlyPlans[0].price)}</span></li>
+            <li>TV Binding <span className="font-semibold text-sky-brand">{ksh(tvPlan.price)} / month</span></li>
           </ul>
         </div>
       </div>
-      <div className="bg-navy-900 text-sm text-slate-300">
-        <div className="container-x flex flex-col items-center justify-between gap-2 py-5 sm:flex-row">
+      <div className="relative border-t border-white/10">
+        <div className="container-x flex flex-col items-center justify-between gap-2 py-6 text-sm sm:flex-row">
           <p>© {year} SNET Networks. All rights reserved.</p>
-          <p>{site.mantra}</p>
+          <p className="text-white">{site.mantra}</p>
         </div>
       </div>
     </footer>

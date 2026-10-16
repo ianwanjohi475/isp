@@ -4,7 +4,7 @@ import { Breadcrumb, SectionTitle } from "@/components/Ui";
 import { ContactForm } from "@/components/ContactForm";
 import { MapEmbed } from "@/components/MapEmbed";
 import { Reveal } from "@/components/Reveal";
-import { site, whatsappLink } from "@/lib/site";
+import { photos, site, whatsappLink } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -20,7 +20,7 @@ const cards = [
 export default function ContactPage() {
   return (
     <>
-      <Breadcrumb title="Contact Us" current="Contact" />
+      <Breadcrumb title="Contact Us" current="Contact" image={photos.cafeHotspot} />
 
       <section className="section-space">
         <div className="container-x">
@@ -34,7 +34,7 @@ export default function ContactPage() {
                     href={c.href}
                     target={external ? "_blank" : undefined}
                     rel={external ? "noopener noreferrer" : undefined}
-                    className="group block h-full rounded-md border border-line bg-white p-9 text-center transition duration-300 hover:-translate-y-1.5 hover:border-primary-500 hover:shadow-[0_20px_50px_rgba(11,27,63,0.1)]"
+                    className="card-fx top-line group block h-full overflow-hidden rounded-2xl border border-line bg-white p-9 text-center"
                   >
                     <span className="mx-auto flex h-[72px] w-[72px] items-center justify-center rounded-full bg-primary-50 text-primary-500 transition group-hover:bg-primary-500 group-hover:text-white">
                       <Icon className="h-8 w-8" strokeWidth={1.6} />

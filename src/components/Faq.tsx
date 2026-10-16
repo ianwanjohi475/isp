@@ -29,7 +29,7 @@ export const faqs = [
 export function Faq({ items = faqs }: { items?: typeof faqs }) {
   const [open, setOpen] = useState(0);
   return (
-    <div className="rounded-md border border-line bg-white">
+    <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-[0_20px_50px_-25px_rgba(11,27,63,0.25)]">
       {items.map((f, i) => {
         const isOpen = open === i;
         return (

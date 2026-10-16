@@ -5,7 +5,7 @@ Fast · Stable · Reliable Network.
 Marketing site for SNET Networks built with **Next.js 16 (App Router)**, **TypeScript** and **Tailwind CSS 4**.
 Layout and section structure are inspired by the Netfix ISP template (top info bar, hero slider with price,
 photo plan cards with speed tags, features with counters, services, special offer, CTA band, TV section,
-FAQ + coverage map, breadcrumb page headers). All artwork is original SVG — no template images or code.
+FAQ + coverage map, breadcrumb page headers). All photography and the logo are SNET-owned images — no template images or code.
 
 ## Pages
 
@@ -26,12 +26,13 @@ Everything (prices, speeds, phone, email, map location) lives in **`src/lib/site
 - Change `mapQuery` to your town / office (e.g. `"Kitengela Market, Kenya"`) to update all maps.
 - Change `url` to your real domain for SEO.
 
-## Graphics
+## Photos & logo
 
-See **`IMAGE-PROMPTS.md`** for a professional, realistic ChatGPT prompt for every image on the site.
-Save each generated image into `public/photos/` with the exact file name from that list
-(e.g. `public/photos/hero-hotspot.png` — .png, .jpg or .webp) and redeploy — the site uses it automatically.
-Until a file exists, the built-in 2D graphic is shown in its place.
+- Photos live in `src/assets/photos/` (listed in `src/assets/photos/index.ts`).
+  To change one, replace the `.jpg` with a new file of the same name.
+- Logo: `public/logo.png` (light backgrounds) and `public/logo-white.png` (dark backgrounds).
+  Browser icon: `src/app/icon.png`.
+- `IMAGE-PROMPTS.md` has ChatGPT prompts for generating more images.
 
 ## Run locally
 
