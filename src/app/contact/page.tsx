@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { Mail, Phone, MessageCircle, Clock } from "lucide-react";
-import { PageHeader } from "@/components/PageHeader";
+import { Mail, MessageCircle, PhoneCall } from "lucide-react";
+import { Breadcrumb, SectionTitle } from "@/components/Ui";
 import { ContactForm } from "@/components/ContactForm";
 import { MapEmbed } from "@/components/MapEmbed";
 import { Reveal } from "@/components/Reveal";
@@ -11,71 +11,58 @@ export const metadata: Metadata = {
   description: `Call SNET Networks on ${site.phone} or email ${site.email} to get connected.`,
 };
 
-const channels = [
-  { icon: Phone, label: "Call us", value: site.phone, href: `tel:${site.phoneIntl}` },
-  { icon: MessageCircle, label: "WhatsApp", value: site.phone, href: whatsappLink("Hi SNET Networks 👋") },
-  { icon: Mail, label: "Email", value: site.email, href: `mailto:${site.email}` },
+const cards = [
+  { icon: PhoneCall, title: "Call Us", value: site.phone, href: `tel:${site.phoneIntl}`, note: "Talk to our team directly" },
+  { icon: MessageCircle, title: "WhatsApp", value: site.phone, href: whatsappLink("Hi SNET Networks 👋"), note: "Chat with us anytime" },
+  { icon: Mail, title: "Email Us", value: site.email, href: `mailto:${site.email}`, note: "We reply as soon as we can" },
 ];
 
 export default function ContactPage() {
   return (
     <>
-      <PageHeader eyebrow="Contact" title={<>Let&apos;s get you <span className="text-gradient">connected.</span></>}>
-        Questions about packages, coverage or support? Our team is a call or text away.
-      </PageHeader>
+      <Breadcrumb title="Contact Us" current="Contact" />
 
-      <section className="py-20">
-        <div className="container-x grid gap-8 lg:grid-cols-5">
-          <div className="space-y-4 lg:col-span-2">
-            {channels.map((c, i) => {
+      <section className="section-space">
+        <div className="container-x">
+          <div className="grid gap-7 md:grid-cols-3">
+            {cards.map((c, i) => {
               const Icon = c.icon;
+              const external = c.href.startsWith("http");
               return (
-                <Reveal key={c.label} delay={i * 80}>
+                <Reveal key={c.title} delay={i * 90}>
                   <a
                     href={c.href}
-                    target={c.href.startsWith("http") ? "_blank" : undefined}
-                    rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="group flex items-center gap-5 rounded-3xl bg-white p-6 ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand-500/10 hover:ring-brand-200"
+                    target={external ? "_blank" : undefined}
+                    rel={external ? "noopener noreferrer" : undefined}
+                    className="group block h-full rounded-md border border-line bg-white p-9 text-center transition duration-300 hover:-translate-y-1.5 hover:border-primary-500 hover:shadow-[0_20px_50px_rgba(11,27,63,0.1)]"
                   >
-                    <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-500 text-white shadow-lg shadow-brand-500/30">
-                      <Icon className="h-6 w-6" />
+                    <span className="mx-auto flex h-[72px] w-[72px] items-center justify-center rounded-full bg-primary-50 text-primary-500 transition group-hover:bg-primary-500 group-hover:text-white">
+                      <Icon className="h-8 w-8" strokeWidth={1.6} />
                     </span>
-                    <span className="min-w-0">
-                      <span className="block text-sm text-slate-500">{c.label}</span>
-                      <span className="block break-all font-display font-semibold text-ink-900 group-hover:text-brand-600">
-                        {c.value}
-                      </span>
-                    </span>
+                    <h3 className="mt-6 text-2xl">{c.title}</h3>
+                    <p className="mt-1 text-sm">{c.note}</p>
+                    <p className="mt-3 break-all text-lg font-medium text-primary-500">{c.value}</p>
                   </a>
                 </Reveal>
               );
             })}
-            <Reveal delay={260}>
-              <div className="flex items-center gap-5 rounded-3xl bg-ink-900 p-6 text-white">
-                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-signal-300">
-                  <Clock className="h-6 w-6" />
-                </span>
-                <span>
-                  <span className="block text-sm text-slate-400">Hotspot network</span>
-                  <span className="block font-display font-semibold">Online around the clock</span>
-                </span>
+          </div>
+
+          <div className="mt-20 grid gap-12 lg:grid-cols-2">
+            <Reveal>
+              <SectionTitle sub="Get in touch" title="Send Us A Message">
+                <p>Tell us what you need — a hotspot package, a home or business line, TV binding or a hotspot in your area.</p>
+              </SectionTitle>
+              <div className="mt-10">
+                <ContactForm />
+              </div>
+            </Reveal>
+            <Reveal delay={120} className="scroll-mt-24" >
+              <div id="map" className="h-full min-h-[460px] scroll-mt-28">
+                <MapEmbed className="h-full" />
               </div>
             </Reveal>
           </div>
-
-          <Reveal className="lg:col-span-3" delay={120}>
-            <div className="rounded-[2rem] bg-white p-7 shadow-xl shadow-ink-900/5 ring-1 ring-slate-200 sm:p-10">
-              <h2 className="text-2xl font-bold">Send us a message</h2>
-              <p className="mb-8 mt-2 text-slate-600">Fill in the form and we&apos;ll get back to you quickly.</p>
-              <ContactForm />
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="pb-24">
-        <div className="container-x">
-          <MapEmbed className="h-[420px]" />
         </div>
       </section>
     </>

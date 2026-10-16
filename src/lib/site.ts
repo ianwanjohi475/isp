@@ -119,7 +119,22 @@ export function planMessage(plan: Plan, kind: string) {
 export const nav = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "/services", label: "Packages" },
-  { href: "/coverage", label: "Coverage" },
+  { href: "/services", label: "Services" },
+  { href: "/packages", label: "Packages" },
   { href: "/contact", label: "Contact" },
 ];
+
+/**
+ * Photo slots. Every visual on the site has a drawn illustration by default.
+ * To use a real photo instead, drop a .jpg into /public/photos and set its path here,
+ * e.g. hero: "/photos/hero.jpg". Leave as null to keep the illustration.
+ */
+export const photos: Record<string, string | null> = {
+  hero: null,
+  hotspot: null,
+  monthly: null,
+  tv: null,
+  community: null,
+  offer: null,
+  about: null,
+};

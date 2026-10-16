@@ -42,12 +42,12 @@ export function LogoMark({ className = "h-10 w-10", title = "SNET Networks" }: M
 export function Logo({ light = false, className = "" }: { light?: boolean; className?: string }) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
-      <LogoMark className="h-10 w-10 shrink-0" />
+      <LogoMark className="h-12 w-12 shrink-0" />
       <span className="flex flex-col leading-none">
-        <span className={`font-display text-xl font-extrabold tracking-tight ${light ? "text-white" : "text-ink-900"}`}>
+        <span className={`font-display text-[28px] font-extrabold tracking-tight ${light ? "text-white" : "text-navy-900"}`}>
           SNET
         </span>
-        <span className={`mt-1 text-[0.6rem] font-semibold tracking-[0.32em] ${light ? "text-signal-300" : "text-brand-600"}`}>
+        <span className={`mt-1 text-[0.66rem] font-bold tracking-[0.42em] ${light ? "text-sky-brand" : "text-primary-500"}`}>
           NETWORKS
         </span>
       </span>

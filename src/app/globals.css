@@ -2,88 +2,91 @@
 
 @theme {
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Sora Variable", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Sora Variable", "Inter Variable", ui-sans-serif, sans-serif;
 
-  --color-ink-950: #040b1f;
-  --color-ink-900: #081433;
-  --color-ink-800: #0e1f4a;
-  --color-ink-700: #1a2e63;
+  --color-navy-950: #061430;
+  --color-navy-900: #0b1b3f;
+  --color-navy-800: #13285a;
+  --color-navy-700: #1d3672;
 
-  --color-brand-50: #eef4ff;
-  --color-brand-100: #dce8ff;
-  --color-brand-200: #b6ceff;
-  --color-brand-300: #82abff;
-  --color-brand-400: #4d84ff;
-  --color-brand-500: #2563ff;
-  --color-brand-600: #134be6;
-  --color-brand-700: #0f3bb8;
-  --color-brand-800: #112f8a;
+  --color-primary-50: #eef4ff;
+  --color-primary-100: #dbe7ff;
+  --color-primary-200: #b9d0ff;
+  --color-primary-300: #86adff;
+  --color-primary-400: #4f86f7;
+  --color-primary-500: #1f62ec;
+  --color-primary-600: #1250d6;
+  --color-primary-700: #0e40ad;
 
-  --color-signal-300: #7ee8fa;
-  --color-signal-400: #38d6f5;
-  --color-signal-500: #10bde3;
+  --color-sky-brand: #1fb5ef;
+  --color-body: #6b7385;
+  --color-line: #e8ebf2;
+  --color-soft: #f5f7fb;
 
-  --color-spark-400: #ffc24b;
-  --color-spark-500: #ffab1a;
-
-  --animate-ping-slow: ping-slow 3.6s cubic-bezier(0, 0, 0.2, 1) infinite;
   --animate-float: float 6s ease-in-out infinite;
-  --animate-spin-slow: spin 40s linear infinite;
-  --animate-dash: dash 3s linear infinite;
+  --animate-fade-up: fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-ping-slow: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
 
-  @keyframes ping-slow {
-    0% { transform: scale(0.55); opacity: 0.9; }
-    100% { transform: scale(1.35); opacity: 0; }
-  }
   @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
+    50% { transform: translateY(-10px); }
   }
-  @keyframes dash {
-    to { stroke-dashoffset: -40; }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes ping-slow {
+    0% { transform: scale(0.6); opacity: 0.8; }
+    100% { transform: scale(1.4); opacity: 0; }
   }
 }
 
 @layer base {
   html { scroll-behavior: smooth; }
-  body {
-    @apply bg-white text-slate-700 antialiased;
-  }
-  h1, h2, h3, h4 {
-    @apply font-display text-ink-900 tracking-tight;
-  }
-  ::selection { @apply bg-brand-500 text-white; }
+  body { @apply bg-white font-sans text-[15px] leading-7 text-body antialiased; }
+  h1, h2, h3, h4, h5 { @apply font-medium tracking-tight text-navy-900; }
+  ::selection { @apply bg-primary-500 text-white; }
 }
 
 @utility container-x {
-  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  @apply mx-auto w-full max-w-[1290px] px-4 sm:px-6 lg:px-8;
 }
 
-@utility text-gradient {
-  @apply bg-gradient-to-r from-brand-400 via-signal-400 to-brand-300 bg-clip-text text-transparent;
+/* Template-style pill buttons */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-[13px] font-semibold uppercase tracking-wider transition duration-300;
+}
+@utility btn-primary {
+  @apply btn bg-primary-500 text-white shadow-lg shadow-primary-500/25 hover:bg-navy-900;
+}
+@utility btn-outline {
+  @apply btn border-2 border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white;
+}
+@utility btn-light {
+  @apply btn border-2 border-white/70 text-white hover:bg-white hover:text-navy-900;
 }
 
-@utility grid-bg {
+@utility section-space {
+  @apply py-20 lg:py-28;
+}
+
+@utility sub-title {
+  @apply mb-3 inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-[0.18em] text-primary-500;
+}
+
+@utility dots-bg {
+  background-image: radial-gradient(rgb(31 98 236 / 0.18) 1.2px, transparent 1.2px);
+  background-size: 18px 18px;
+}
+
+@utility lines-bg {
   background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
-  background-size: 48px 48px;
+    linear-gradient(115deg, transparent 0 48%, rgb(255 255 255 / 0.05) 48% 52%, transparent 52%),
+    linear-gradient(65deg, transparent 0 60%, rgb(255 255 255 / 0.04) 60% 63%, transparent 63%);
 }
 
-@utility dot-bg {
-  background-image: radial-gradient(rgb(37 99 255 / 0.14) 1px, transparent 1px);
-  background-size: 22px 22px;
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
-}
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.reveal.is-visible { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }

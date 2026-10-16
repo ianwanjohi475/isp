@@ -1,213 +1,261 @@
 import Link from "next/link";
-import { ArrowRight, Gauge, ShieldCheck, Wallet, Headphones, Target, Eye, MapPin } from "lucide-react";
-import { HeroArt, CommunityArt } from "@/components/Illustrations";
-import { PlansTabs } from "@/components/PlansTabs";
+import { CheckCircle2, Tv, Wifi, Zap } from "lucide-react";
+import { HeroSlider } from "@/components/HeroSlider";
+import { PhotoPlanCard } from "@/components/Cards";
+import { CommunityScene, CoverageMap, HomeScene, HotspotScene, TvScene } from "@/components/Scenes";
+import { Visual } from "@/components/Visual";
 import { Reveal } from "@/components/Reveal";
-import { SectionHeading } from "@/components/PageHeader";
-import { HowItWorks, Venues } from "@/components/Sections";
-import { MapEmbed } from "@/components/MapEmbed";
+import { SectionTitle, CtaBand } from "@/components/Ui";
+import { ServiceBoxes } from "@/components/ServiceBoxes";
+import { CountUp } from "@/components/CountUp";
 import { Faq } from "@/components/Faq";
-import { CtaBand } from "@/components/CtaBand";
-import { site, whatsappLink } from "@/lib/site";
-
-const highlights = [
-  { icon: Wallet, title: "From KSh 10", text: "Hotspot access that fits any pocket" },
-  { icon: Gauge, title: "Up to 15 Mbps", text: "Smooth browsing, calls & streaming" },
-  { icon: ShieldCheck, title: "Stable network", text: "Built for consistent, all-day uptime" },
-  { icon: Headphones, title: "Local support", text: "Real people, one call or text away" },
-];
+import { ksh, planMessage, tvPlan, whatsappLink } from "@/lib/site";
 
 export default function Home() {
   return (
     <>
-      {/* HERO */}
-      <section className="relative overflow-hidden bg-ink-950 pt-28 lg:pt-32">
-        <div className="grid-bg pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
-        <div className="pointer-events-none absolute -left-40 top-20 h-[420px] w-[420px] rounded-full bg-brand-600/30 blur-3xl" />
-        <div className="pointer-events-none absolute -right-20 bottom-0 h-[380px] w-[380px] rounded-full bg-signal-500/15 blur-3xl" />
+      <HeroSlider
+        slides={[
+          {
+            title: <>Journey With Fast &amp; Stable Internet</>,
+            text: "Hotspot Wi-Fi + No Contracts + No Installation + Pay As You Go",
+            price: "KSh 10",
+            per: "Hour",
+            href: "/packages",
+            visual: <Visual slot="hero" alt="Customer connecting to SNET hotspot"><HotspotScene /></Visual>,
+          },
+          {
+            title: <>Reliable Internet For Your Home</>,
+            text: "Dedicated Line + 8 to 15 Mbps + Local Support + Monthly Billing",
+            price: "KSh 1,500",
+            per: "Month",
+            href: "/packages#monthly",
+            visual: <Visual slot="monthly" alt="Home internet router and laptop"><HomeScene /></Visual>,
+          },
+          {
+            title: <>Turn Your TV Into A Smart Screen</>,
+            text: "TV Binding + 8 Mbps + YouTube, Movies & Live Sport",
+            price: "KSh 499",
+            per: "Month",
+            href: "/packages#tv",
+            visual: <Visual slot="tv" alt="Smart TV streaming"><TvScene /></Visual>,
+          },
+        ]}
+      />
 
-        <div className="container-x relative grid items-center gap-12 pb-20 lg:grid-cols-2 lg:pb-28">
-          <div>
-            <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold text-slate-200">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-              </span>
-              Hotspots live in your community
-            </p>
-            <h1 className="mt-6 text-4xl font-extrabold leading-[1.08] text-white sm:text-5xl lg:text-6xl">
-              Internet that keeps your <span className="text-gradient">community connected.</span>
-            </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-300">
-              SNET Networks brings <strong className="font-semibold text-white">fast, stable and reliable</strong> Wi-Fi to
-              rural areas, markets, entertainment joints and education centres — starting at just KSh 10.
-            </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/services"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-500 px-7 py-3.5 text-sm font-semibold text-white shadow-xl shadow-brand-500/30 transition hover:bg-brand-400"
-              >
-                View packages <ArrowRight className="h-4 w-4" />
-              </Link>
-              <a
-                href={whatsappLink("Hi SNET Networks 👋, is there an SNET hotspot near me?")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10"
-              >
-                <MapPin className="h-4 w-4 text-signal-300" /> Find a hotspot near me
-              </a>
-            </div>
-
-            <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-white/10 pt-8">
-              {[
-                ["KSh 10", "Hotspot / hour"],
-                ["15 Mbps", "Top speed"],
-                ["KSh 499", "Smart TV / month"],
-              ].map(([v, l]) => (
-                <div key={l}>
-                  <dt className="sr-only">{l}</dt>
-                  <dd className="font-display text-2xl font-bold text-white sm:text-3xl">{v}</dd>
-                  <dd className="mt-1 text-xs text-slate-400">{l}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-
-          <div className="relative mx-auto w-full max-w-[540px]">
-            <HeroArt className="w-full" />
-            <div className="absolute left-0 top-[46%] hidden animate-float rounded-2xl bg-white/95 px-4 py-3 shadow-2xl shadow-black/30 backdrop-blur sm:block">
-              <p className="text-[0.65rem] font-semibold uppercase tracking-wider text-slate-500">Full Day</p>
-              <p className="font-display text-lg font-bold text-ink-900">
-                KSh 50 <span className="text-sm font-medium text-brand-600">· 10 Mbps</span>
-              </p>
-            </div>
-            <div
-              className="absolute bottom-6 right-0 hidden animate-float rounded-2xl bg-ink-800/90 px-4 py-3 shadow-2xl ring-1 ring-white/10 backdrop-blur sm:block"
-              style={{ animationDelay: "1.5s" }}
-            >
-              <p className="flex items-center gap-2 text-sm font-semibold text-white">
-                <span className="h-2 w-2 rounded-full bg-emerald-400" /> Connected
-              </p>
-              <p className="mt-0.5 text-xs text-slate-400">Fast · Stable · Reliable</p>
-            </div>
-          </div>
-        </div>
-
-        {/* highlight strip */}
-        <div className="relative border-t border-white/10 bg-ink-900/60 backdrop-blur">
-          <div className="container-x grid grid-cols-2 gap-6 py-8 lg:grid-cols-4">
-            {highlights.map((h) => {
-              const Icon = h.icon;
-              return (
-                <div key={h.title} className="flex items-center gap-4">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-500/15 text-signal-300 ring-1 ring-brand-400/20">
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <div>
-                    <p className="font-display text-sm font-semibold text-white">{h.title}</p>
-                    <p className="text-xs text-slate-400">{h.text}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* PACKAGES */}
-      <section className="py-24" id="packages">
+      {/* PLANS */}
+      <section className="section-space bg-soft">
         <div className="container-x">
           <Reveal>
-            <SectionHeading eyebrow="Our packages" title="Simple pricing. Serious speed.">
-              Pay-as-you-go hotspot access, dedicated monthly connections and Smart TV binding — choose what fits you.
-            </SectionHeading>
+            <SectionTitle sub="Our packages" title={<>Discover Our Best <br className="hidden sm:block" />Value Plans</>} center />
           </Reveal>
-          <div className="mt-12">
-            <PlansTabs />
+          <div className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+            <Reveal>
+              <PhotoPlanCard
+                visual={<Visual slot="hotspot" alt="SNET hotspot" className="h-full"><HotspotScene /></Visual>}
+                title={<>Hotspot <br />Wi-Fi</>}
+                speed="6-10"
+                features={["1 hour to 24 hours", "Phone & laptop", "No contracts"]}
+                price={10}
+                per="Hour"
+                href="/packages#hotspot"
+              />
+            </Reveal>
+            <Reveal delay={100}>
+              <PhotoPlanCard
+                visual={<Visual slot="monthly" alt="Home internet" className="h-full"><HomeScene /></Visual>}
+                title={<>Home &amp; <br />Business</>}
+                speed="8-15"
+                features={["Dedicated monthly line", "Many devices at once", "Priority local support"]}
+                price={1500}
+                per="Month"
+                href="/packages#monthly"
+              />
+            </Reveal>
+            <Reveal delay={200}>
+              <PhotoPlanCard
+                visual={<Visual slot="tv" alt="TV binding" className="h-full"><TvScene /></Visual>}
+                title={<>Smart TV <br />Binding</>}
+                speed="8"
+                features={["Bound to your Smart TV", "YouTube, movies & sport", "Set up by our team"]}
+                price={499}
+                per="Month"
+                href="/packages#tv"
+              />
+            </Reveal>
           </div>
         </div>
       </section>
 
-      <HowItWorks />
-
-      {/* ABOUT TEASER */}
-      <section className="py-24">
+      {/* FEATURES */}
+      <section className="section-space">
         <div className="container-x grid items-center gap-14 lg:grid-cols-2">
-          <Reveal>
-            <CommunityArt className="w-full drop-shadow-2xl" />
+          <Reveal className="relative">
+            <Visual slot="community" alt="SNET hotspot serving a community" className="aspect-[4/3.6] rounded-md shadow-[0_30px_60px_rgba(11,27,63,0.15)]">
+              <CommunityScene />
+            </Visual>
+            <div className="absolute -bottom-8 right-6 flex items-center gap-4 rounded-md bg-primary-500 px-7 py-5 text-white shadow-xl sm:right-10">
+              <Zap className="h-10 w-10" strokeWidth={1.5} />
+              <div>
+                <p className="text-3xl font-semibold leading-none">15 Mbps</p>
+                <p className="mt-1 text-sm text-white/85">Top speed available</p>
+              </div>
+            </div>
           </Reveal>
           <Reveal delay={120}>
-            <SectionHeading eyebrow="About SNET" title="Everyone deserves access to the internet" align="left">
-              No matter where they live. We bring affordable, reliable Wi-Fi closer to people — helping communities learn,
-              communicate, do business and enjoy everything being online offers.
-            </SectionHeading>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-2xl bg-brand-50 p-5">
-                <Target className="h-6 w-6 text-brand-600" />
-                <h3 className="mt-3 font-semibold">Our mission</h3>
-                <p className="mt-1.5 text-sm text-slate-600">
-                  Fast, reliable and affordable internet that keeps people connected anytime, anywhere.
-                </p>
-              </div>
-              <div className="rounded-2xl bg-ink-900 p-5 text-white">
-                <Eye className="h-6 w-6 text-signal-300" />
-                <h3 className="mt-3 font-semibold text-white">Our vision</h3>
-                <p className="mt-1.5 text-sm text-slate-300">
-                  A leading hotspot provider, bridging the digital divide with seamless connectivity.
-                </p>
-              </div>
+            <SectionTitle sub="Why SNET" title="Experience The Features Of SNET Networks">
+              <p>
+                We bring affordable, reliable Wi-Fi closer to people in rural areas, markets, entertainment joints and
+                education centres — so everyone can learn, communicate, do business and enjoy being online.
+              </p>
+            </SectionTitle>
+            <div className="mt-9 grid grid-cols-3 gap-6">
+              {[
+                { n: 24, s: "Hrs", l: "Max hotspot validity" },
+                { n: 15, s: "Mbps", l: "Top speed internet" },
+                { n: 10, s: "KSh", l: "Lowest package price", prefix: true },
+              ].map((c) => (
+                <div key={c.l}>
+                  <p className="text-[34px] font-medium leading-none text-primary-500">
+                    {c.prefix && <span className="text-xl">KSh </span>}
+                    <CountUp to={c.n} />
+                    {!c.prefix && <span className="text-xl"> {c.s}</span>}
+                  </p>
+                  <p className="mt-2 text-[15px] text-navy-900">{c.l}</p>
+                </div>
+              ))}
             </div>
-            <Link href="/about" className="mt-8 inline-flex items-center gap-2 font-semibold text-brand-600 hover:text-brand-700">
-              More about us <ArrowRight className="h-4 w-4" />
-            </Link>
+            <ul className="mt-8 grid gap-3 text-navy-900 sm:grid-cols-2">
+              {["Fast, stable & reliable", "Affordable for everyone", "No contracts on hotspot", "Friendly local support"].map((t) => (
+                <li key={t} className="flex items-center gap-2.5">
+                  <CheckCircle2 className="h-5 w-5 text-primary-500" /> {t}
+                </li>
+              ))}
+            </ul>
+            <Link href="/packages" className="btn-primary mt-10">Try hotspot now</Link>
           </Reveal>
         </div>
       </section>
 
-      <Venues />
-
-      {/* MAP */}
-      <section className="py-24">
-        <div className="container-x grid items-center gap-12 lg:grid-cols-5">
-          <Reveal className="lg:col-span-2">
-            <SectionHeading eyebrow="Coverage" title="Growing one hotspot at a time" align="left">
-              Our network keeps expanding across rural centres, markets and schools. Not sure if we&apos;re near you? Just ask.
-            </SectionHeading>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/coverage"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-500"
-              >
-                Explore coverage <ArrowRight className="h-4 w-4" />
-              </Link>
-              <a
-                href={`tel:${site.phoneIntl}`}
-                className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-ink-900 ring-1 ring-slate-300 transition hover:ring-brand-400"
-              >
-                Call {site.phone}
-              </a>
-            </div>
-          </Reveal>
-          <Reveal className="lg:col-span-3" delay={120}>
-            <MapEmbed className="h-[420px]" />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="bg-slate-50 py-24">
-        <div className="container-x">
+      {/* SERVICES */}
+      <section className="section-space relative overflow-hidden bg-navy-900">
+        <div className="lines-bg absolute inset-0" />
+        <div className="container-x relative">
           <Reveal>
-            <SectionHeading eyebrow="FAQ" title="Questions? We've got answers." />
+            <SectionTitle sub="Our services" title={<>Find Perfect Network <br className="hidden sm:block" />Solutions</>} center light />
           </Reveal>
-          <Reveal className="mt-12">
-            <Faq />
+          <div className="mt-14">
+            <ServiceBoxes dark />
+          </div>
+        </div>
+      </section>
+
+      {/* SPECIAL OFFER */}
+      <section className="section-space overflow-hidden">
+        <div className="container-x grid items-center gap-16 lg:grid-cols-2">
+          <Reveal className="relative mx-auto w-full max-w-[540px]">
+            <Visual slot="offer" alt="Full day hotspot offer" className="aspect-square rounded-full shadow-[0_30px_60px_rgba(11,27,63,0.15)]">
+              <HotspotScene />
+            </Visual>
+            <div className="absolute -left-2 top-[18%] flex h-40 w-40 flex-col items-center justify-center rounded-full bg-primary-500 text-center text-white shadow-xl ring-8 ring-white sm:h-48 sm:w-48">
+              <span className="text-sm font-medium uppercase">Up to</span>
+              <span className="text-4xl font-semibold leading-tight sm:text-5xl">10 MB</span>
+              <span className="text-sm font-medium uppercase">Per second</span>
+            </div>
+            <div className="absolute left-[22%] top-0 flex h-24 w-24 flex-col items-center justify-center rounded-full bg-navy-900 text-center text-sm font-medium uppercase leading-tight text-white ring-8 ring-white sm:h-28 sm:w-28">
+              Special
+              <br />
+              offer
+            </div>
+          </Reveal>
+          <Reveal delay={120}>
+            <SectionTitle sub="Full day hotspot" title="Get A Full Day Of Internet At A Very Cheap Price">
+              <p>
+                Stay online for a whole 24 hours at 10 Mbps — perfect for work, school, streaming and business. Connect to any SNET
+                hotspot, pay with your phone and go.
+              </p>
+            </SectionTitle>
+            <div className="mt-8 flex flex-wrap items-center gap-10">
+              <p className="flex items-start gap-1">
+                <span className="mt-2 text-lg text-navy-900">KSh</span>
+                <span className="text-7xl font-medium leading-none text-primary-500">50</span>
+                <span className="self-end text-body">24 Hours</span>
+              </p>
+              <Link href="/packages#hotspot" className="font-medium text-navy-900 underline underline-offset-4 hover:text-primary-500">
+                See all hotspot packages
+              </Link>
+            </div>
+            <a
+              href={whatsappLink("Hi SNET Networks 👋, I'd like the Full Day hotspot package (KSh 50 / 24 hours).")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline mt-10"
+            >
+              Get started
+            </a>
           </Reveal>
         </div>
       </section>
 
       <CtaBand />
+
+      {/* TV */}
+      <section className="section-space overflow-hidden">
+        <div className="container-x grid items-center gap-14 lg:grid-cols-[1.15fr_1fr]">
+          <Reveal>
+            <Visual slot="tv" alt="Smart TV with TV binding" className="aspect-[4/3] rounded-md shadow-[0_30px_60px_rgba(11,27,63,0.2)]">
+              <TvScene />
+            </Visual>
+          </Reveal>
+          <Reveal delay={120}>
+            <SectionTitle sub="TV binding" title="Enjoy Sports, Movies, TV Shows & More">
+              <p>{tvPlan.blurb} We bind a dedicated 8 Mbps connection to your Smart TV so you can stream without sharing your bandwidth.</p>
+            </SectionTitle>
+            <p className="mt-7 text-xl text-navy-900">
+              Bind Your Smart TV &amp; Get
+              <br />
+              <span className="text-primary-500">8 Mbps Dedicated Streaming</span>
+            </p>
+            <div className="mt-9 flex flex-wrap items-center gap-8">
+              <div className="relative rounded-md border-2 border-primary-500 px-6 pb-3 pt-5">
+                <span className="absolute -top-3 left-5 bg-white px-2 text-sm text-navy-900">Only</span>
+                <span className="text-5xl font-medium text-primary-500">{ksh(tvPlan.price)}</span>
+                <span className="text-sm text-navy-900">/Mon</span>
+              </div>
+              <a
+                href={whatsappLink(planMessage(tvPlan, "TV"))}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 font-semibold uppercase text-primary-500 underline underline-offset-4"
+              >
+                <Tv className="h-4 w-4" /> Bind my TV
+              </a>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* FAQ + MAP */}
+      <section className="section-space bg-soft">
+        <div className="container-x grid gap-14 lg:grid-cols-2">
+          <Reveal>
+            <SectionTitle sub="FAQ" title="Frequently Asked Questions" className="mb-10" />
+            <Faq />
+          </Reveal>
+          <Reveal delay={120} className="lg:pt-24">
+            <h3 className="text-3xl">We Are Growing Everywhere</h3>
+            <p className="mt-3 max-w-md">
+              One hotspot at a time — across rural centres, markets, entertainment joints and schools in our communities.
+            </p>
+            <CoverageMap className="mx-auto mt-6 w-full max-w-[420px]" />
+            <div className="mt-4 text-center">
+              <Link href="/contact#map" className="btn bg-[#16b26b] text-white hover:bg-navy-900">
+                <Wifi className="h-4 w-4" /> Check your network coverage
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
     </>
   );
 }
