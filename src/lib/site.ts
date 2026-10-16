@@ -1,10 +1,8 @@
 export const site = {
   name: "SNET Networks",
-  short: "SNET",
-  mantra: "Fast. Stable. Reliable.",
-  tagline: "Fast, stable & reliable internet — one hotspot at a time.",
+  mantra: "Fast, Stable, Reliable Network",
   url: "https://snetnetworks.co.ke",
-  phone: "0748 349 372",
+  phone: "0748 349372",
   phoneIntl: "+254748349372",
   whatsapp: "254748349372",
   email: "snetnetworktelecoms@gmail.com",
@@ -15,96 +13,31 @@ export const site = {
 
 export type Plan = {
   id: string;
+  /** e.g. "1 Hour", "8 Mbps", "TV Binding" */
   name: string;
   price: number;
   speed: number;
+  /** what the price is per: "1 Hour", "Month" ... */
   period: string;
-  blurb: string;
-  features: string[];
-  badge?: string;
 };
 
+/** Hotspot Services */
 export const hotspotPlans: Plan[] = [
-  {
-    id: "hs-1h",
-    name: "Quick Hour",
-    price: 10,
-    speed: 6,
-    period: "1 Hour",
-    blurb: "Check messages, pay bills, quick browsing.",
-    features: ["6 Mbps speed", "Valid for 1 hour", "1 device"],
-  },
-  {
-    id: "hs-3h",
-    name: "Power 3",
-    price: 20,
-    speed: 8,
-    period: "3 Hours",
-    blurb: "Classes, video calls and social media.",
-    features: ["8 Mbps speed", "Valid for 3 hours", "1 device"],
-  },
-  {
-    id: "hs-12h",
-    name: "Half Day",
-    price: 35,
-    speed: 8,
-    period: "12 Hours",
-    blurb: "Work, study and stream through the day.",
-    features: ["8 Mbps speed", "Valid for 12 hours", "1 device"],
-    badge: "Popular",
-  },
-  {
-    id: "hs-24h",
-    name: "Full Day",
-    price: 50,
-    speed: 10,
-    period: "24 Hours",
-    blurb: "The best value for a full day online.",
-    features: ["10 Mbps speed", "Valid for 24 hours", "1 device"],
-    badge: "Best value",
-  },
+  { id: "hs-1h", name: "1 Hour", price: 10, speed: 6, period: "1 Hour" },
+  { id: "hs-3h", name: "3 Hours", price: 20, speed: 8, period: "3 Hours" },
+  { id: "hs-12h", name: "12 Hours", price: 35, speed: 8, period: "12 Hours" },
+  { id: "hs-24h", name: "24 Hours", price: 50, speed: 10, period: "24 Hours" },
 ];
 
+/** Monthly Services */
 export const monthlyPlans: Plan[] = [
-  {
-    id: "m-8",
-    name: "Home Basic",
-    price: 1500,
-    speed: 8,
-    period: "Month",
-    blurb: "Perfect for small homes and single users.",
-    features: ["8 Mbps dedicated line", "Browsing, YouTube & social", "Ideal for 2–4 devices", "Local support"],
-  },
-  {
-    id: "m-10",
-    name: "Home Plus",
-    price: 2000,
-    speed: 10,
-    period: "Month",
-    blurb: "Smooth HD streaming for the whole family.",
-    features: ["10 Mbps dedicated line", "HD streaming & video calls", "Ideal for 4–6 devices", "Priority support"],
-    badge: "Most popular",
-  },
-  {
-    id: "m-15",
-    name: "Business Pro",
-    price: 2500,
-    speed: 15,
-    period: "Month",
-    blurb: "For shops, offices and power users.",
-    features: ["15 Mbps dedicated line", "Multiple HD streams", "Ideal for 6+ devices", "Priority support"],
-  },
+  { id: "m-8", name: "8 Mbps", price: 1500, speed: 8, period: "Month" },
+  { id: "m-10", name: "10 Mbps", price: 2000, speed: 10, period: "Month" },
+  { id: "m-15", name: "15 Mbps", price: 2500, speed: 15, period: "Month" },
 ];
 
-export const tvPlan: Plan = {
-  id: "tv-8",
-  name: "TV Binding",
-  price: 499,
-  speed: 8,
-  period: "Month",
-  blurb: "Turn your Smart TV into an entertainment hub.",
-  features: ["8 Mbps bound to your TV", "YouTube, Netflix & live streams", "Set up by our technicians", "Billed monthly"],
-};
+/** TV Binding Services */
+export const tvPlan: Plan = { id: "tv-8", name: "TV Binding", price: 499, speed: 8, period: "Month" };
 
 export const ksh = (n: number) => `KSh ${n.toLocaleString("en-KE")}`;
 
@@ -113,7 +46,7 @@ export function whatsappLink(message: string) {
 }
 
 export function planMessage(plan: Plan, kind: string) {
-  return `Hi SNET Networks 👋, I'd like to get the ${kind} "${plan.name}" package — ${plan.speed} Mbps for ${ksh(plan.price)} / ${plan.period}.`;
+  return `Hi SNET Networks 👋, I'd like the ${kind} package: ${plan.name} — ${plan.speed} Mbps for ${ksh(plan.price)} / ${plan.period}.`;
 }
 
 export const nav = [
@@ -125,16 +58,19 @@ export const nav = [
 ];
 
 /**
- * Photo slots. Every visual on the site has a drawn illustration by default.
- * To use a real photo instead, drop a .jpg into /public/photos and set its path here,
- * e.g. hero: "/photos/hero.jpg". Leave as null to keep the illustration.
+ * Photos. Save each image into /public/photos/ with exactly this file name and the site
+ * uses it automatically (on the next build). Until a file exists, a drawn illustration shows.
+ * See PHOTO-PROMPTS.md for the prompt to generate each one.
  */
-export const photos: Record<string, string | null> = {
-  hero: null,
-  hotspot: null,
-  monthly: null,
-  tv: null,
-  community: null,
-  offer: null,
-  about: null,
-};
+export const photos = {
+  heroHotspot: "/photos/hero-hotspot.jpg",
+  heroMonthly: "/photos/hero-monthly.jpg",
+  heroTv: "/photos/hero-tv.jpg",
+  hotspot: "/photos/hotspot.jpg",
+  monthly: "/photos/monthly.jpg",
+  tv: "/photos/tv-binding.jpg",
+  community: "/photos/community.jpg",
+  offer: "/photos/offer-24-hours.jpg",
+} as const;
+
+export type PhotoSlot = keyof typeof photos;

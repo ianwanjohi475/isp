@@ -26,14 +26,12 @@ Everything (prices, speeds, phone, email, map location) lives in **`src/lib/site
 - Change `mapQuery` to your town / office (e.g. `"Kitengela Market, Kenya"`) to update all maps.
 - Change `url` to your real domain for SEO.
 
-## Using real photos
+## Photos
 
-Every picture slot shows a drawn illustration until you add a photo:
-
-1. Put your photo in `public/photos/` (e.g. `public/photos/hero.jpg`).
-2. In `src/lib/site.ts`, set the slot in `photos`, e.g. `hero: "/photos/hero.jpg"`.
-
-Slots: `hero`, `hotspot`, `monthly`, `tv`, `community`, `offer`, `about`.
+See **`PHOTO-PROMPTS.md`** for a ChatGPT prompt for every picture on the site.
+Save each generated image into `public/photos/` with the exact file name from that list
+(e.g. `public/photos/hero-hotspot.jpg`) and redeploy — the site uses it automatically.
+Until a photo exists, a drawn illustration is shown in its place.
 
 ## Run locally
 

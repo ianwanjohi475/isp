@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     "SNET Networks brings affordable, reliable Wi-Fi to rural areas, markets, entertainment joints and education centres.",
 };
 
-const reach = ["Rural areas", "Markets", "Entertainment joints", "Education centres", "Homes & families", "Small businesses"];
+const reach = ["Rural areas", "Markets", "Entertainment joints", "Education centres"];
 
 export default function AboutPage() {
   return (
@@ -25,7 +25,7 @@ export default function AboutPage() {
       <section className="section-space">
         <div className="container-x grid items-center gap-14 lg:grid-cols-2">
           <Reveal className="relative pb-10 pr-10">
-            <Visual slot="about" alt="SNET Networks in the community" className="aspect-[4/3.6] rounded-md shadow-[0_30px_60px_rgba(11,27,63,0.15)]">
+            <Visual slot="community" alt="SNET Networks in the community" className="aspect-[4/3.6] rounded-md shadow-[0_30px_60px_rgba(11,27,63,0.15)]">
               <CommunityScene />
             </Visual>
             <div className="absolute bottom-0 right-0 w-[42%] rounded-md border-8 border-white shadow-xl">
@@ -38,8 +38,8 @@ export default function AboutPage() {
             <SectionTitle sub="About SNET Networks" title="Bringing The World Closer To Our Communities">
               <p>
                 In SNET Networks, we believe everyone deserves access to the internet, no matter where they live. That&apos;s why
-                we bring affordable and reliable Wi-Fi closer to people in rural areas, markets, entertainment joints and
-                education centres, helping communities stay connected to the world.
+                we bring affordable and reliable Wi-Fi closer to people in rural areas, markets, entertainment joints, Education
+                centers, helping communities stay connected to the world.
               </p>
               <p className="mt-4">
                 Through our growing network of hotspots, we make it easier for people to learn, communicate, do business, and
@@ -60,9 +60,9 @@ export default function AboutPage() {
 
         <div className="container-x mt-24 grid grid-cols-2 gap-8 border-t border-line pt-16 text-center lg:grid-cols-4">
           {[
-            { n: 3, s: "", l: "Service types" },
+            { n: 3, s: "", l: "Services: Hotspot, Monthly & TV" },
             { n: 15, s: " Mbps", l: "Top speed" },
-            { n: 24, s: " Hrs", l: "Longest hotspot pass" },
+            { n: 24, s: " Hrs", l: "Longest hotspot package" },
             { n: 10, s: "", l: "KSh starting price" },
           ].map((c) => (
             <div key={c.l}>
@@ -127,11 +127,11 @@ export default function AboutPage() {
         <div className="container-x grid gap-14 lg:grid-cols-[1fr_1.3fr]">
           <Reveal>
             <SectionTitle sub="FAQ" title="Frequently Asked Questions">
-              <p>Can&apos;t find your answer? Call or WhatsApp us — we&apos;re happy to help.</p>
+              <p>Can&apos;t find your answer? Call us on 0748 349372 or email snetnetworktelecoms@gmail.com.</p>
             </SectionTitle>
             <div className="mt-8 flex items-center gap-4 rounded-md bg-primary-500 p-6 text-white">
               <Zap className="h-10 w-10" strokeWidth={1.5} />
-              <p className="text-lg font-medium">Fast · Stable · Reliable Network</p>
+              <p className="text-lg font-medium">Fast, Stable, Reliable Network</p>
             </div>
           </Reveal>
           <Reveal delay={120}>

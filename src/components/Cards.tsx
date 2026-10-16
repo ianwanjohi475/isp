@@ -54,35 +54,24 @@ export function PhotoPlanCard({
 }
 
 /** Template "bundle" box used for hotspot packages. */
-export function BundleCard({ plan }: { plan: Plan }) {
-  const featured = Boolean(plan.badge);
+export function BundleCard({ plan, featured = false }: { plan: Plan; featured?: boolean }) {
   return (
     <article
       className={`relative flex flex-col rounded-md border bg-white px-8 py-10 text-center transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(11,27,63,0.12)] ${
         featured ? "border-primary-500 shadow-[0_20px_50px_rgba(31,98,236,0.15)]" : "border-line"
       }`}
     >
-      {plan.badge && (
-        <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-500 px-4 py-1 text-xs font-semibold uppercase tracking-wider text-white">
-          {plan.badge}
-        </span>
-      )}
-      <h3 className="text-2xl">{plan.period}</h3>
-      <p className="mt-1 text-sm font-medium uppercase tracking-wide text-primary-500">{plan.speed} Mbps speed</p>
+      <h3 className="text-2xl">{plan.name}</h3>
+      <p className="mt-1 text-sm font-medium uppercase tracking-wide text-primary-500">Hotspot package</p>
       <div className="mx-auto my-7 flex h-28 w-28 flex-col items-center justify-center rounded-full bg-primary-50 ring-8 ring-primary-50/50">
         <span className="text-3xl font-semibold text-navy-900">{plan.speed}</span>
         <span className="text-xs font-semibold uppercase text-primary-500">Mbps</span>
       </div>
       <ul className="space-y-2.5 text-navy-900">
-        <li>{plan.name} package</li>
-        <li>Valid for {plan.period.toLowerCase()}</li>
-        <li>1 device</li>
-        <li>No contracts</li>
+        <li>Speed: {plan.speed} Mbps</li>
+        <li>Duration: {plan.period}</li>
       </ul>
-      <p className="mt-7 flex items-baseline justify-center gap-1.5">
-        <span className="text-sm">From</span>
-        <span className="text-[34px] font-medium text-navy-900">{ksh(plan.price)}</span>
-      </p>
+      <p className="mt-7 text-[34px] font-medium text-navy-900">{ksh(plan.price)}</p>
       <a
         href={whatsappLink(planMessage(plan, "hotspot"))}
         target="_blank"
@@ -108,27 +97,20 @@ export function ColorPlanCard({ plan, index }: { plan: Plan; index: number }) {
         </g>
         <circle cx="50" cy="78" r="6" fill="currentColor" />
       </svg>
-      {plan.badge && (
-        <span className="absolute right-6 top-6 rounded-full bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-navy-900">
-          {plan.badge}
-        </span>
-      )}
       <h3 className="text-[28px] text-white">{plan.name}</h3>
-      <p className="mt-1 text-white/85">{plan.blurb}</p>
+      <p className="mt-1 text-white/85">Monthly Service</p>
       <div className="mt-8 flex items-start gap-2">
         <span className="mt-2 text-sm font-medium">KSh</span>
         <span className="text-[64px] font-medium leading-none">{plan.price.toLocaleString("en-KE")}</span>
         <span className="mt-2 text-sm font-medium uppercase leading-tight">
-          {plan.speed} Mbps
-          <br />/month
+          Per
+          <br />
+          month
         </span>
       </div>
       <ul className="mt-7 space-y-2 text-[15px] text-white/90">
-        {plan.features.map((f) => (
-          <li key={f} className="flex items-center gap-2.5">
-            <CheckSquare className="h-4 w-4 shrink-0" /> {f}
-          </li>
-        ))}
+        <li className="flex items-center gap-2.5"><CheckSquare className="h-4 w-4 shrink-0" /> Speed: {plan.speed} Mbps</li>
+        <li className="flex items-center gap-2.5"><CheckSquare className="h-4 w-4 shrink-0" /> Price: {ksh(plan.price)} per month</li>
       </ul>
       <a
         href={whatsappLink(planMessage(plan, "monthly"))}

@@ -59,7 +59,7 @@ export function CtaBand() {
       <div className="absolute -bottom-24 -right-10 h-96 w-96 rounded-full border-[50px] border-sky-brand/10" />
       <div className="container-x relative text-center">
         <h2 className="mx-auto max-w-3xl text-[32px] leading-tight text-white sm:text-5xl">
-          Need Fast &amp; Reliable Internet? Choose SNET &amp; The Real Network
+          Need Fast, Stable &amp; Reliable Internet? Choose SNET Networks
         </h2>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link href="/packages" className="btn-primary hover:bg-white hover:text-navy-900">View our packages</Link>

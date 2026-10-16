@@ -9,7 +9,7 @@ import { hotspotPlans, ksh, monthlyPlans, planMessage, tvPlan, whatsappLink } fr
 
 export const metadata: Metadata = {
   title: "Packages & Pricing",
-  description: "SNET hotspot from KSh 10/hour, monthly internet from KSh 1,500 and Smart TV binding at KSh 499/month.",
+  description: "SNET hotspot from KSh 10 per hour, monthly internet from KSh 1,500 and TV Binding at KSh 499 per month.",
 };
 
 export default function PackagesPage() {
@@ -21,13 +21,13 @@ export default function PackagesPage() {
         <div className="container-x">
           <Reveal>
             <SectionTitle sub="Hotspot services" title="Let's Discover Our Hotspot Packages" center>
-              <p>Pay only for the time you need. Connect to any SNET hotspot, choose a package and start browsing.</p>
+              <p>Choose a hotspot package from 1 Hour to 24 Hours.</p>
             </SectionTitle>
           </Reveal>
           <div className="mt-16 grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
             {hotspotPlans.map((p, i) => (
               <Reveal key={p.id} delay={i * 90}>
-                <BundleCard plan={p} />
+                <BundleCard plan={p} featured={p.id === "hs-24h"} />
               </Reveal>
             ))}
           </div>
@@ -37,8 +37,8 @@ export default function PackagesPage() {
       <section id="monthly" className="section-space scroll-mt-24 bg-soft">
         <div className="container-x">
           <Reveal>
-            <SectionTitle sub="Monthly services" title="Home & Business Monthly Plans" center>
-              <p>A dedicated connection for your home, shop or office — billed once a month.</p>
+            <SectionTitle sub="Monthly services" title="Monthly Packages" center>
+              <p>8 Mbps, 10 Mbps and 15 Mbps — paid per month.</p>
             </SectionTitle>
           </Reveal>
           <div className="mt-14 grid gap-7 md:grid-cols-3">
@@ -57,12 +57,11 @@ export default function PackagesPage() {
         <div className="container-x relative grid items-center gap-12 py-20 lg:grid-cols-[1fr_auto_1fr] lg:py-24">
           <Reveal>
             <span className="sub-title text-sky-brand">TV binding services</span>
-            <h2 className="text-[32px] leading-tight text-white sm:text-[44px]">Bind Your Smart TV</h2>
-            <p className="mt-4 text-xl text-sky-brand">8 Mbps Dedicated Streaming</p>
+            <h2 className="text-[32px] leading-tight text-white sm:text-[44px]">TV Binding</h2>
+            <p className="mt-4 text-xl text-sky-brand">8 Mbps · KSh 499 per month</p>
             <ul className="mt-6 space-y-2 text-slate-300">
-              {tvPlan.features.map((f) => (
-                <li key={f}>— {f}</li>
-              ))}
+              <li>— Speed: {tvPlan.speed} Mbps</li>
+              <li>— Price: {ksh(tvPlan.price)} per month</li>
             </ul>
             <a href={whatsappLink(planMessage(tvPlan, "TV"))} target="_blank" rel="noopener noreferrer" className="btn-primary mt-9 hover:bg-white hover:text-navy-900">
               Bind my TV
@@ -87,7 +86,7 @@ export default function PackagesPage() {
         <div className="container-x grid gap-14 lg:grid-cols-[1fr_1.3fr]">
           <Reveal>
             <SectionTitle sub="Good to know" title="Package Questions">
-              <p>Everything you need to know before you connect. Still unsure? Call us on 0748 349 372.</p>
+              <p>Still unsure? Call us on 0748 349372.</p>
             </SectionTitle>
           </Reveal>
           <Reveal delay={120}>

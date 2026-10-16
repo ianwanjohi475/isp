@@ -6,11 +6,9 @@ import { hotspotPlans, ksh, monthlyPlans, site, tvPlan, whatsappLink } from "@/l
 
 const options = [
   "General enquiry",
-  ...hotspotPlans.map((p) => `Hotspot · ${p.period} · ${ksh(p.price)}`),
+  ...hotspotPlans.map((p) => `Hotspot · ${p.period} · ${p.speed} Mbps · ${ksh(p.price)}`),
   ...monthlyPlans.map((p) => `Monthly · ${p.speed} Mbps · ${ksh(p.price)}`),
   `TV Binding · ${tvPlan.speed} Mbps · ${ksh(tvPlan.price)}`,
-  "New hotspot in my area",
-  "Technical support",
 ];
 
 const field =

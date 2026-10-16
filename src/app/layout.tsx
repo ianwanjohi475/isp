@@ -14,13 +14,13 @@ export const metadata: Metadata = {
     template: "%s · SNET Networks",
   },
   description:
-    "Affordable hotspot Wi-Fi from KSh 10, monthly home & business internet and Smart TV binding. SNET Networks — fast, stable, reliable network.",
+    "SNET Networks — Fast, Stable, Reliable Network. Hotspot from KSh 10, monthly internet from KSh 1,500 and TV Binding at KSh 499 per month.",
   keywords: ["SNET Networks", "hotspot", "Wi-Fi", "internet provider", "ISP Kenya", "TV binding", "home internet"],
   openGraph: {
     type: "website",
     siteName: site.name,
     title: "SNET Networks — Fast, Stable & Reliable Internet",
-    description: "Hotspot Wi-Fi from KSh 10 · Monthly plans from KSh 1,500 · Smart TV binding KSh 499.",
+    description: "Hotspot from KSh 10 · Monthly from KSh 1,500 · TV Binding KSh 499 per month.",
   },
 };
 

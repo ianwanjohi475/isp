@@ -9,7 +9,7 @@ import { SectionTitle, CtaBand } from "@/components/Ui";
 import { ServiceBoxes } from "@/components/ServiceBoxes";
 import { CountUp } from "@/components/CountUp";
 import { Faq } from "@/components/Faq";
-import { ksh, planMessage, tvPlan, whatsappLink } from "@/lib/site";
+import { ksh, planMessage, site, tvPlan, whatsappLink } from "@/lib/site";
 
 export default function Home() {
   return (
@@ -18,27 +18,27 @@ export default function Home() {
         slides={[
           {
             title: <>Journey With Fast &amp; Stable Internet</>,
-            text: "Hotspot Wi-Fi + No Contracts + No Installation + Pay As You Go",
+            text: "Hotspot Services + 1 Hour to 24 Hours + Up To 10 Mbps",
             price: "KSh 10",
             per: "Hour",
             href: "/packages",
-            visual: <Visual slot="hero" alt="Customer connecting to SNET hotspot"><HotspotScene /></Visual>,
+            visual: <Visual slot="heroHotspot" alt="Customer connecting to SNET hotspot"><HotspotScene /></Visual>,
           },
           {
-            title: <>Reliable Internet For Your Home</>,
-            text: "Dedicated Line + 8 to 15 Mbps + Local Support + Monthly Billing",
+            title: <>Monthly Internet Packages</>,
+            text: "Monthly Services + 8 Mbps, 10 Mbps & 15 Mbps",
             price: "KSh 1,500",
             per: "Month",
             href: "/packages#monthly",
-            visual: <Visual slot="monthly" alt="Home internet router and laptop"><HomeScene /></Visual>,
+            visual: <Visual slot="heroMonthly" alt="Home internet router and laptop"><HomeScene /></Visual>,
           },
           {
-            title: <>Turn Your TV Into A Smart Screen</>,
-            text: "TV Binding + 8 Mbps + YouTube, Movies & Live Sport",
+            title: <>TV Binding Services</>,
+            text: "TV Binding + 8 Mbps + Per Month",
             price: "KSh 499",
             per: "Month",
             href: "/packages#tv",
-            visual: <Visual slot="tv" alt="Smart TV streaming"><TvScene /></Visual>,
+            visual: <Visual slot="heroTv" alt="Smart TV streaming"><TvScene /></Visual>,
           },
         ]}
       />
@@ -53,9 +53,9 @@ export default function Home() {
             <Reveal>
               <PhotoPlanCard
                 visual={<Visual slot="hotspot" alt="SNET hotspot" className="h-full"><HotspotScene /></Visual>}
-                title={<>Hotspot <br />Wi-Fi</>}
+                title={<>Hotspot <br />Services</>}
                 speed="6-10"
-                features={["1 hour to 24 hours", "Phone & laptop", "No contracts"]}
+                features={["1 Hour · 6 Mbps · KSh 10", "3 Hours · 8 Mbps · KSh 20", "12 Hours · 8 Mbps · KSh 35", "24 Hours · 10 Mbps · KSh 50"]}
                 price={10}
                 per="Hour"
                 href="/packages#hotspot"
@@ -64,9 +64,9 @@ export default function Home() {
             <Reveal delay={100}>
               <PhotoPlanCard
                 visual={<Visual slot="monthly" alt="Home internet" className="h-full"><HomeScene /></Visual>}
-                title={<>Home &amp; <br />Business</>}
+                title={<>Monthly <br />Services</>}
                 speed="8-15"
-                features={["Dedicated monthly line", "Many devices at once", "Priority local support"]}
+                features={["8 Mbps · KSh 1,500 / month", "10 Mbps · KSh 2,000 / month", "15 Mbps · KSh 2,500 / month"]}
                 price={1500}
                 per="Month"
                 href="/packages#monthly"
@@ -75,9 +75,9 @@ export default function Home() {
             <Reveal delay={200}>
               <PhotoPlanCard
                 visual={<Visual slot="tv" alt="TV binding" className="h-full"><TvScene /></Visual>}
-                title={<>Smart TV <br />Binding</>}
+                title={<>TV Binding <br />Services</>}
                 speed="8"
-                features={["Bound to your Smart TV", "YouTube, movies & sport", "Set up by our team"]}
+                features={["TV Binding", "8 Mbps", "KSh 499 per month"]}
                 price={499}
                 per="Month"
                 href="/packages#tv"
@@ -97,13 +97,13 @@ export default function Home() {
             <div className="absolute -bottom-8 right-6 flex items-center gap-4 rounded-md bg-primary-500 px-7 py-5 text-white shadow-xl sm:right-10">
               <Zap className="h-10 w-10" strokeWidth={1.5} />
               <div>
-                <p className="text-3xl font-semibold leading-none">15 Mbps</p>
-                <p className="mt-1 text-sm text-white/85">Top speed available</p>
+                <p className="text-3xl font-semibold leading-none">Up to 15 Mbps</p>
+                <p className="mt-1 text-sm text-white/85">Monthly Services</p>
               </div>
             </div>
           </Reveal>
           <Reveal delay={120}>
-            <SectionTitle sub="Why SNET" title="Experience The Features Of SNET Networks">
+            <SectionTitle sub={site.mantra} title="Experience The Features Of SNET Networks">
               <p>
                 We bring affordable, reliable Wi-Fi closer to people in rural areas, markets, entertainment joints and
                 education centres — so everyone can learn, communicate, do business and enjoy being online.
@@ -126,7 +126,7 @@ export default function Home() {
               ))}
             </div>
             <ul className="mt-8 grid gap-3 text-navy-900 sm:grid-cols-2">
-              {["Fast, stable & reliable", "Affordable for everyone", "No contracts on hotspot", "Friendly local support"].map((t) => (
+              {["Fast network", "Stable network", "Reliable network", "Affordable packages"].map((t) => (
                 <li key={t} className="flex items-center gap-2.5">
                   <CheckCircle2 className="h-5 w-5 text-primary-500" /> {t}
                 </li>
@@ -159,8 +159,8 @@ export default function Home() {
             </Visual>
             <div className="absolute -left-2 top-[18%] flex h-40 w-40 flex-col items-center justify-center rounded-full bg-primary-500 text-center text-white shadow-xl ring-8 ring-white sm:h-48 sm:w-48">
               <span className="text-sm font-medium uppercase">Up to</span>
-              <span className="text-4xl font-semibold leading-tight sm:text-5xl">10 MB</span>
-              <span className="text-sm font-medium uppercase">Per second</span>
+              <span className="text-4xl font-semibold leading-tight sm:text-5xl">10</span>
+              <span className="text-sm font-medium uppercase">Mbps</span>
             </div>
             <div className="absolute left-[22%] top-0 flex h-24 w-24 flex-col items-center justify-center rounded-full bg-navy-900 text-center text-sm font-medium uppercase leading-tight text-white ring-8 ring-white sm:h-28 sm:w-28">
               Special
@@ -169,10 +169,9 @@ export default function Home() {
             </div>
           </Reveal>
           <Reveal delay={120}>
-            <SectionTitle sub="Full day hotspot" title="Get A Full Day Of Internet At A Very Cheap Price">
+            <SectionTitle sub="Full day hotspot" title="24 Hours Of Internet For Only KSh 50">
               <p>
-                Stay online for a whole 24 hours at 10 Mbps — perfect for work, school, streaming and business. Connect to any SNET
-                hotspot, pay with your phone and go.
+                Our 24 Hours hotspot package gives you 10 Mbps internet for a full day at only KSh 50. Other hotspot packages start from KSh 10 for 1 hour.
               </p>
             </SectionTitle>
             <div className="mt-8 flex flex-wrap items-center gap-10">
@@ -209,12 +208,12 @@ export default function Home() {
           </Reveal>
           <Reveal delay={120}>
             <SectionTitle sub="TV binding" title="Enjoy Sports, Movies, TV Shows & More">
-              <p>{tvPlan.blurb} We bind a dedicated 8 Mbps connection to your Smart TV so you can stream without sharing your bandwidth.</p>
+              <p>Get TV Binding from SNET Networks at 8 Mbps for only KSh 499 per month.</p>
             </SectionTitle>
             <p className="mt-7 text-xl text-navy-900">
-              Bind Your Smart TV &amp; Get
+              TV Binding Services
               <br />
-              <span className="text-primary-500">8 Mbps Dedicated Streaming</span>
+              <span className="text-primary-500">8 Mbps · KSh 499 per month</span>
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-8">
               <div className="relative rounded-md border-2 border-primary-500 px-6 pb-3 pt-5">
@@ -243,9 +242,9 @@ export default function Home() {
             <Faq />
           </Reveal>
           <Reveal delay={120} className="lg:pt-24">
-            <h3 className="text-3xl">We Are Growing Everywhere</h3>
+            <h3 className="text-3xl">Our Growing Hotspot Network</h3>
             <p className="mt-3 max-w-md">
-              One hotspot at a time — across rural centres, markets, entertainment joints and schools in our communities.
+              Bringing the world closer to our communities — in rural areas, markets, entertainment joints and education centres, one hotspot at a time.
             </p>
             <CoverageMap className="mx-auto mt-6 w-full max-w-[420px]" />
             <div className="mt-4 text-center">

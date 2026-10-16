@@ -5,24 +5,24 @@ import { Minus, Plus } from "lucide-react";
 
 export const faqs = [
   {
-    q: "How do I connect to an SNET hotspot?",
-    a: "Turn on Wi-Fi on your phone or laptop and join the SNET network. A page opens where you pick a package and pay — you're online instantly.",
+    q: "How much are the hotspot packages?",
+    a: "1 Hour (6 Mbps) — KSh 10 · 3 Hours (8 Mbps) — KSh 20 · 12 Hours (8 Mbps) — KSh 35 · 24 Hours (10 Mbps) — KSh 50.",
   },
   {
-    q: "How much do the hotspot packages cost?",
-    a: "From KSh 10 for 1 hour at 6 Mbps, KSh 20 for 3 hours, KSh 35 for 12 hours and KSh 50 for a full 24 hours at 10 Mbps.",
+    q: "How much are the monthly packages?",
+    a: "8 Mbps — KSh 1,500 per month · 10 Mbps — KSh 2,000 per month · 15 Mbps — KSh 2,500 per month.",
   },
   {
-    q: "Can I use one hotspot package on several devices?",
-    a: "Each hotspot package works on one device at a time. For several devices at home or work, our monthly packages are better value.",
+    q: "How much is TV Binding?",
+    a: "TV Binding is KSh 499 per month at 8 Mbps.",
   },
   {
-    q: "How can I get internet for my home or business?",
-    a: "Call or WhatsApp us on 0748 349 372 with your location. We confirm coverage, schedule a visit and set everything up for you.",
+    q: "Where does SNET Networks provide internet?",
+    a: "We bring affordable and reliable Wi-Fi closer to people in rural areas, markets, entertainment joints and education centres — one hotspot at a time.",
   },
   {
-    q: "When will SNET reach my area?",
-    a: "We're growing one hotspot at a time across rural centres, markets, entertainment joints and schools. Tell us where you are and we'll prioritise it.",
+    q: "How do I get connected or ask a question?",
+    a: "Call or WhatsApp us on 0748 349372, or email snetnetworktelecoms@gmail.com.",
   },
 ];
 

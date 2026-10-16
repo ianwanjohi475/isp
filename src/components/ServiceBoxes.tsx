@@ -1,17 +1,16 @@
 import Link from "next/link";
-import { ArrowRight, Building2, House, Tv, Wifi } from "lucide-react";
+import { ArrowRight, House, Tv, Wifi } from "lucide-react";
 import { Reveal } from "./Reveal";
 
 export const services = [
-  { icon: Wifi, title: "Hotspot Wi-Fi", href: "/services#hotspot", text: "Pay-as-you-go Wi-Fi in markets, schools and entertainment joints — from KSh 10 an hour." },
-  { icon: House, title: "Home Internet", href: "/services#monthly", text: "A dedicated monthly connection for the whole family, with speeds from 8 to 15 Mbps." },
-  { icon: Building2, title: "Business Internet", href: "/services#monthly", text: "Keep your shop, cyber or office online with stable speeds and priority support." },
-  { icon: Tv, title: "TV Binding", href: "/services#tv", text: "Stream YouTube, movies and live sport on your Smart TV for KSh 499 a month." },
+  { icon: Wifi, title: "Hotspot Services", href: "/services#hotspot", text: "1 Hour at 6 Mbps for KSh 10, 3 Hours for KSh 20, 12 Hours for KSh 35 and 24 Hours at 10 Mbps for KSh 50." },
+  { icon: House, title: "Monthly Services", href: "/services#monthly", text: "8 Mbps for KSh 1,500, 10 Mbps for KSh 2,000 and 15 Mbps for KSh 2,500 per month." },
+  { icon: Tv, title: "TV Binding Services", href: "/services#tv", text: "TV Binding at 8 Mbps for KSh 499 per month." },
 ];
 
 export function ServiceBoxes({ dark = false }: { dark?: boolean }) {
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {services.map((s, i) => {
         const Icon = s.icon;
         return (

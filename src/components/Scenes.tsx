@@ -145,7 +145,7 @@ export function HomeScene({ className = "" }: SceneProps) {
       {/* speed badge */}
       <g transform="translate(330 70)" filter="url(#hm-sh)">
         <rect width="150" height="70" rx="16" fill="#ffffff" />
-        <text x="18" y="30" fontSize="11" fill="#6b7385" fontFamily="Inter, sans-serif">Home Plus</text>
+        <text x="18" y="30" fontSize="11" fill="#6b7385" fontFamily="Inter, sans-serif">Monthly</text>
         <text x="18" y="56" fontSize="24" fontWeight="800" fill="#0b1b3f" fontFamily="Inter, sans-serif">10</text>
         <text x="50" y="56" fontSize="13" fontWeight="700" fill="#1f62ec" fontFamily="Inter, sans-serif">Mbps</text>
         <path d="M110 48 A 18 18 0 1 1 134 48" fill="none" stroke="#dbe7ff" strokeWidth="6" strokeLinecap="round" />

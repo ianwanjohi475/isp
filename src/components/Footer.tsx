@@ -15,7 +15,7 @@ export function Footer() {
               <PhoneCall className="h-6 w-6" />
             </span>
             <div>
-              <p className="text-sm">Call us anytime</p>
+              <p className="text-sm">Call us</p>
               <a href={`tel:${site.phoneIntl}`} className="text-xl font-semibold text-navy-900 hover:text-primary-500">
                 {site.phone}
               </a>
@@ -55,11 +55,10 @@ export function Footer() {
         <div className="border-line py-16 lg:border-r lg:px-12">
           <h4 className="text-lg uppercase">Our services</h4>
           <ul className="mt-6 space-y-3">
-            <li><Link href="/services#hotspot" className="hover:text-primary-500">Hotspot Wi-Fi</Link></li>
-            <li><Link href="/services#monthly" className="hover:text-primary-500">Home Internet</Link></li>
-            <li><Link href="/services#monthly" className="hover:text-primary-500">Business Internet</Link></li>
-            <li><Link href="/services#tv" className="hover:text-primary-500">TV Binding</Link></li>
-            <li><Link href="/contact" className="hover:text-primary-500">Request a hotspot</Link></li>
+            <li><Link href="/services#hotspot" className="hover:text-primary-500">Hotspot Services</Link></li>
+            <li><Link href="/services#monthly" className="hover:text-primary-500">Monthly Services</Link></li>
+            <li><Link href="/services#tv" className="hover:text-primary-500">TV Binding Services</Link></li>
+            <li><Link href="/contact" className="hover:text-primary-500">Contact Us</Link></li>
           </ul>
         </div>
 
@@ -96,7 +95,7 @@ export function Footer() {
       <div className="bg-navy-900 text-sm text-slate-300">
         <div className="container-x flex flex-col items-center justify-between gap-2 py-5 sm:flex-row">
           <p>© {year} SNET Networks. All rights reserved.</p>
-          <p>Fast · Stable · Reliable Network</p>
+          <p>{site.mantra}</p>
         </div>
       </div>
     </footer>

@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 };
 
 const cards = [
-  { icon: PhoneCall, title: "Call Us", value: site.phone, href: `tel:${site.phoneIntl}`, note: "Talk to our team directly" },
-  { icon: MessageCircle, title: "WhatsApp", value: site.phone, href: whatsappLink("Hi SNET Networks 👋"), note: "Chat with us anytime" },
-  { icon: Mail, title: "Email Us", value: site.email, href: `mailto:${site.email}`, note: "We reply as soon as we can" },
+  { icon: PhoneCall, title: "Call Us", value: site.phone, href: `tel:${site.phoneIntl}`, note: "Call SNET Networks" },
+  { icon: MessageCircle, title: "WhatsApp", value: site.phone, href: whatsappLink("Hi SNET Networks 👋"), note: "Chat with us on WhatsApp" },
+  { icon: Mail, title: "Email Us", value: site.email, href: `mailto:${site.email}`, note: "Send us an email" },
 ];
 
 export default function ContactPage() {
@@ -51,7 +51,7 @@ export default function ContactPage() {
           <div className="mt-20 grid gap-12 lg:grid-cols-2">
             <Reveal>
               <SectionTitle sub="Get in touch" title="Send Us A Message">
-                <p>Tell us what you need — a hotspot package, a home or business line, TV binding or a hotspot in your area.</p>
+                <p>Tell us which package you need — Hotspot, Monthly or TV Binding.</p>
               </SectionTitle>
               <div className="mt-10">
                 <ContactForm />

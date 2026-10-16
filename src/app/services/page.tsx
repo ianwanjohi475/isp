@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CheckCircle2, CreditCard, Rocket, Smartphone, Wifi } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { Breadcrumb, CtaBand, SectionTitle } from "@/components/Ui";
 import { HomeScene, HotspotScene, TvScene } from "@/components/Scenes";
 import { Visual } from "@/components/Visual";
@@ -10,47 +10,46 @@ import { hotspotPlans, ksh, monthlyPlans, tvPlan } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Our Services",
-  description: "Hotspot Wi-Fi, monthly home & business internet and Smart TV binding from SNET Networks.",
+  description: "SNET Networks Hotspot Services, Monthly Services and TV Binding Services.",
 };
 
 const blocks = [
   {
     id: "hotspot",
     sub: "Hotspot services",
-    title: "Pay As You Go Hotspot Wi-Fi",
-    text: "Connect at any SNET hotspot in markets, schools, entertainment joints and rural centres. Pick a package from 1 hour to a full day, pay on your phone and browse — no contracts, no installation.",
+    title: "Hotspot Services",
+    text: "Affordable hotspot Wi-Fi in rural areas, markets, entertainment joints and education centres. Choose a package from 1 Hour to 24 Hours.",
     points: hotspotPlans.map((p) => `${p.period} · ${p.speed} Mbps — ${ksh(p.price)}`),
     from: `From ${ksh(hotspotPlans[0].price)}`,
-    slot: "hotspot",
+    slot: "hotspot" as const,
     scene: <HotspotScene />,
   },
   {
     id: "monthly",
     sub: "Monthly services",
-    title: "Home & Business Internet",
-    text: "A dedicated connection for your home, shop or office, billed once a month. Ideal for families, cyber cafés and small businesses that need steady speeds all day.",
-    points: monthlyPlans.map((p) => `${p.speed} Mbps — ${ksh(p.price)} / month`),
+    title: "Monthly Services",
+    text: "Monthly internet packages at 8 Mbps, 10 Mbps and 15 Mbps.",
+    points: monthlyPlans.map((p) => `${p.speed} Mbps — ${ksh(p.price)} per month`),
     from: `From ${ksh(monthlyPlans[0].price)}`,
-    slot: "monthly",
+    slot: "monthly" as const,
     scene: <HomeScene />,
   },
   {
     id: "tv",
     sub: "TV binding services",
-    title: "Smart TV Binding",
-    text: "We bind a dedicated 8 Mbps connection to your Smart TV so you can enjoy YouTube, movies, series and live sport on the big screen without slowing down your other devices.",
-    points: [`${tvPlan.speed} Mbps bound to your TV`, "YouTube, Netflix & live streams", "Set up by our technicians", `${ksh(tvPlan.price)} per month`],
+    title: "TV Binding Services",
+    text: "TV Binding at 8 Mbps for KSh 499 per month.",
+    points: [`TV Binding — ${tvPlan.speed} Mbps`, `${ksh(tvPlan.price)} per month`],
     from: `${ksh(tvPlan.price)} / month`,
-    slot: "tv",
+    slot: "tv" as const,
     scene: <TvScene />,
   },
 ];
 
-const steps = [
-  { icon: Wifi, title: "Find SNET Wi-Fi", text: "Open Wi-Fi settings and join the SNET hotspot near you." },
-  { icon: Smartphone, title: "Pick a package", text: "Choose from 1 hour up to a full day of internet." },
-  { icon: CreditCard, title: "Pay on your phone", text: "Pay in seconds — no forms and no contracts." },
-  { icon: Rocket, title: "Enjoy browsing", text: "You're online at full speed until your time ends." },
+const priceList = [
+  { group: "Hotspot Services", rows: hotspotPlans.map((p) => [p.period, `${p.speed} Mbps`, ksh(p.price)]) },
+  { group: "Monthly Services", rows: monthlyPlans.map((p) => ["Per month", `${p.speed} Mbps`, ksh(p.price)]) },
+  { group: "TV Binding Services", rows: [["Per month", `${tvPlan.speed} Mbps`, ksh(tvPlan.price)]] },
 ];
 
 export default function ServicesPage() {
@@ -62,7 +61,7 @@ export default function ServicesPage() {
         <div className="container-x">
           <Reveal>
             <SectionTitle sub="What we do" title="Find Perfect Network Solutions" center>
-              <p>Three simple ways to get online with SNET — whichever fits your day, your home or your business.</p>
+              <p>Hotspot Services, Monthly Services and TV Binding Services.</p>
             </SectionTitle>
           </Reveal>
           <div className="mt-14">
@@ -105,25 +104,35 @@ export default function ServicesPage() {
         <div className="lines-bg absolute inset-0" />
         <div className="container-x relative">
           <Reveal>
-            <SectionTitle sub="How hotspot works" title="Online In Under A Minute" center light />
+            <SectionTitle sub="Price list" title="All SNET Packages" center light />
           </Reveal>
-          <ol className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {steps.map((s, i) => {
-              const Icon = s.icon;
-              return (
-                <Reveal as="li" key={s.title} delay={i * 100}>
-                  <div className="relative h-full rounded-md bg-navy-800 p-8 text-center">
-                    <span className="absolute right-5 top-4 text-5xl font-semibold text-white/5">0{i + 1}</span>
-                    <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary-500 text-white">
-                      <Icon className="h-7 w-7" />
-                    </span>
-                    <h3 className="mt-6 text-xl text-white">{s.title}</h3>
-                    <p className="mt-2 text-slate-300">{s.text}</p>
-                  </div>
-                </Reveal>
-              );
-            })}
-          </ol>
+          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+            {priceList.map((g, i) => (
+              <Reveal key={g.group} delay={i * 100}>
+                <div className="h-full rounded-md bg-navy-800 p-8">
+                  <h3 className="text-xl text-white">{g.group}</h3>
+                  <table className="mt-5 w-full text-left text-[15px]">
+                    <thead>
+                      <tr className="border-b border-white/10 text-xs uppercase tracking-wider text-sky-brand">
+                        <th className="pb-3 font-semibold">Package</th>
+                        <th className="pb-3 font-semibold">Speed</th>
+                        <th className="pb-3 text-right font-semibold">Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {g.rows.map((r) => (
+                        <tr key={r.join()} className="border-b border-white/5 text-slate-200 last:border-0">
+                          <td className="py-3">{r[0]}</td>
+                          <td className="py-3">{r[1]}</td>
+                          <td className="py-3 text-right font-semibold text-white">{r[2]}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
