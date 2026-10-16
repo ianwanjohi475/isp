@@ -26,12 +26,12 @@ Everything (prices, speeds, phone, email, map location) lives in **`src/lib/site
 - Change `mapQuery` to your town / office (e.g. `"Kitengela Market, Kenya"`) to update all maps.
 - Change `url` to your real domain for SEO.
 
-## Photos
+## Graphics
 
-See **`PHOTO-PROMPTS.md`** for a ChatGPT prompt for every picture on the site.
+See **`GRAPHIC-PROMPTS.md`** for a ChatGPT prompt (flat 2D style) for every graphic on the site.
 Save each generated image into `public/photos/` with the exact file name from that list
-(e.g. `public/photos/hero-hotspot.jpg`) and redeploy — the site uses it automatically.
-Until a photo exists, a drawn illustration is shown in its place.
+(e.g. `public/photos/hero-hotspot.png` — .png, .jpg or .webp) and redeploy — the site uses it automatically.
+Until a file exists, the built-in 2D graphic is shown in its place.
 
 ## Run locally
 

@@ -58,19 +58,19 @@ export const nav = [
 ];
 
 /**
- * Photos. Save each image into /public/photos/ with exactly this file name and the site
- * uses it automatically (on the next build). Until a file exists, a drawn illustration shows.
- * See PHOTO-PROMPTS.md for the prompt to generate each one.
+ * Graphics. Save each image into /public/photos/ with this file name (.png, .jpg or .webp)
+ * and the site uses it automatically on the next build. Until a file exists, the built-in
+ * drawn graphic shows. See GRAPHIC-PROMPTS.md for the prompt to generate each one.
  */
 export const photos = {
-  heroHotspot: "/photos/hero-hotspot.jpg",
-  heroMonthly: "/photos/hero-monthly.jpg",
-  heroTv: "/photos/hero-tv.jpg",
-  hotspot: "/photos/hotspot.jpg",
-  monthly: "/photos/monthly.jpg",
-  tv: "/photos/tv-binding.jpg",
-  community: "/photos/community.jpg",
-  offer: "/photos/offer-24-hours.jpg",
+  heroHotspot: "hero-hotspot",
+  heroMonthly: "hero-monthly",
+  heroTv: "hero-tv",
+  hotspot: "hotspot",
+  monthly: "monthly",
+  tv: "tv-binding",
+  community: "community",
+  offer: "offer-24-hours",
 } as const;
 
 export type PhotoSlot = keyof typeof photos;
