@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowUp } from "lucide-react";
+import { ArrowUp } from "@/components/icons";
 
 export function ScrollTop() {
   const [p, setP] = useState(0);

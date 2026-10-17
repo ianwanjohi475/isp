@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, MessageCircle, Phone, PhoneCall } from "lucide-react";
+import { Mail, MessageCircle, Phone, PhoneCall } from "@/components/icons";
 import { Logo } from "./Logo";
 import { FooterSignup } from "./FooterSignup";
 import { hotspotPlans, ksh, monthlyPlans, nav, site, tvPlan, whatsappLink } from "@/lib/site";

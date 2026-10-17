@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Coins, Eye, Gauge, Headset, House, PackageCheck, PhoneCall, Rocket, ShieldCheck, Target, Tv, Wifi, Zap } from "lucide-react";
+import { ArrowRight, Coins, Eye, Gauge, Headset, House, PackageCheck, PhoneCall, Rocket, ShieldCheck, Target, Tv, Wifi, Zap } from "@/components/icons";
 import { Photo } from "./Photo";
 import { Reveal } from "./Reveal";
 import { CountUp } from "./CountUp";
@@ -121,7 +121,7 @@ export function ServicesShowcase() {
                   <div className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950 via-navy-950/85 to-navy-950/60 opacity-0 transition duration-700 group-hover:opacity-100" />
                   <span className="num-outline absolute right-7 top-5 font-display text-7xl font-extrabold transition group-hover:[-webkit-text-stroke-color:rgb(255_255_255/0.3)]">{c.n}</span>
                   <span className="flex h-[72px] w-[72px] items-center justify-center rounded-2xl bg-primary-50 text-primary-500 transition duration-500 group-hover:bg-primary-500 group-hover:text-white">
-                    <Icon className="h-8 w-8" strokeWidth={1.8} />
+                    <Icon className="h-8 w-8" />
                   </span>
                   <h3 className="mt-8 text-2xl transition group-hover:text-white">{c.title}</h3>
                   <p className="mt-3 transition group-hover:text-slate-200">{c.text}</p>
@@ -264,7 +264,7 @@ export function Process() {
             return (
               <Reveal as="li" key={s.title} delay={i * 120} className="group relative text-center">
                 <span className="relative mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-white text-primary-500 shadow-[0_15px_40px_-10px_rgba(31,98,236,0.35)] ring-8 ring-white/60 transition duration-500 group-hover:-translate-y-2 group-hover:bg-primary-500 group-hover:text-white">
-                  <Icon className="h-9 w-9" strokeWidth={1.7} />
+                  <Icon className="h-9 w-9" />
                   <span className="absolute -right-1 -top-1 flex h-8 w-8 items-center justify-center rounded-full bg-navy-900 font-display text-sm font-bold text-white ring-4 ring-white">
                     {i + 1}
                   </span>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus } from "@/components/icons";
 
 export const faqs = [
   {

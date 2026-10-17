@@ -1,4 +1,4 @@
-import { Asterisk } from "lucide-react";
+import { Asterisk } from "@/components/icons";
 
 const items = ["Hotspot Services", "Monthly Services", "TV Binding Services", "Fast", "Stable", "Reliable Network", "From KSh 10", "Up To 15 Mbps"];
 
@@ -10,7 +10,7 @@ export function Marquee({ className = "" }: { className?: string }) {
         {row.map((t, i) => (
           <span key={i} className="flex items-center gap-10 font-display text-xl font-bold uppercase tracking-wide text-white sm:text-2xl">
             {t}
-            <Asterisk className="h-6 w-6 text-white/70" strokeWidth={3} />
+            <Asterisk className="h-6 w-6 text-white/70" />
           </span>
         ))}
       </div>

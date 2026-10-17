@@ -2,8 +2,8 @@
 
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { ArrowRight, ChevronLeft, ChevronRight, House, PhoneCall, Tv, Wifi } from "lucide-react";
+import { useEffect, useState, type CSSProperties } from "react";
+import { ArrowRight, ChevronLeft, ChevronRight, House, PhoneCall, Tv, Wifi } from "@/components/icons";
 import { site } from "@/lib/site";
 
 export type Slide = {
@@ -16,6 +16,8 @@ export type Slide = {
   per: string;
   href: string;
   position?: string;
+  /** focal point used on phones, where the photo is cropped much more */
+  mobilePosition?: string;
 };
 
 const DURATION = 7000;
@@ -66,33 +68,35 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
             priority={idx === 0}
             placeholder="blur"
             sizes="100vw"
-            className={`object-cover ${idx === i ? "animate-kenburns" : ""}`}
-            style={{ objectPosition: sl.position ?? "center" }}
+            className={`object-cover object-[var(--pos-m)] sm:object-[var(--pos)] ${idx === i ? "sm:animate-kenburns" : ""}`}
+            style={{ "--pos": sl.position ?? "center", "--pos-m": sl.mobilePosition ?? sl.position ?? "center" } as CSSProperties}
           />
         </div>
       ))}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/95 via-navy-950/70 to-navy-950/30" />
+      {/* phones: lighter, bottom-weighted overlay so the photo stays visible */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-navy-950/55 via-navy-950/35 to-navy-950/90 sm:hidden" />
+      <div className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-navy-950/95 via-navy-950/70 to-navy-950/30 sm:block" />
       <div className="absolute inset-x-0 top-0 -z-10 h-56 bg-gradient-to-b from-navy-950/80 to-transparent" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950/70 via-transparent to-transparent" />
 
-      <div className="container-x grid min-h-[720px] items-center gap-12 pb-52 pt-36 sm:min-h-[800px] sm:pb-44 sm:pt-44 lg:min-h-[860px] lg:grid-cols-[1.35fr_1fr]">
+      <div className="container-x grid min-h-[600px] items-center gap-12 pb-48 pt-32 sm:min-h-[800px] sm:pb-44 sm:pt-44 lg:min-h-[860px] lg:grid-cols-[1.35fr_1fr]">
         <div key={i} className="max-w-2xl">
           <p className="animate-fade-up inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-white">
             <Wifi className="h-3.5 w-3.5 text-sky-brand" /> {s.tag}
           </p>
-          <h1 className="animate-fade-up mt-6 text-[40px] font-extrabold leading-[1.06] text-white [animation-delay:120ms] sm:text-6xl xl:text-[74px]">
+          <h1 className="animate-fade-up mt-5 text-[36px] font-extrabold [text-shadow:0_2px_24px_rgb(4_11_31/0.5)] leading-[1.06] text-white [animation-delay:120ms] sm:text-6xl xl:text-[74px]">
             {head(s.title)} <span className="bg-gradient-to-r from-sky-brand to-primary-300 bg-clip-text text-transparent">{tail(s.title)}</span>
           </h1>
-          <p className="animate-fade-up mt-6 max-w-lg text-lg text-slate-200 [animation-delay:240ms]">{s.text}</p>
+          <p className="animate-fade-up mt-5 max-w-lg text-base text-slate-100 [animation-delay:240ms] [text-shadow:0_1px_12px_rgb(4_11_31/0.6)] sm:mt-6 sm:text-lg">{s.text}</p>
           <p className="animate-fade-up mt-7 flex items-baseline gap-2 [animation-delay:360ms]">
             <span className="font-display text-5xl font-extrabold text-white sm:text-6xl">{s.price}</span>
             <span className="text-slate-300">/{s.per}</span>
           </p>
-          <div className="animate-fade-up mt-9 flex flex-wrap gap-4 [animation-delay:480ms]">
-            <Link href={s.href} className="btn-primary hover:bg-white hover:text-navy-900">
+          <div className="animate-fade-up mt-8 flex flex-wrap gap-3 [animation-delay:480ms] sm:mt-9 sm:gap-4">
+            <Link href={s.href} className="btn-primary px-6 hover:bg-white hover:text-navy-900 sm:px-8">
               Get started <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link href="/packages" className="btn-light">All packages</Link>
+            <Link href="/packages" className="btn-light px-6 sm:px-8">All packages</Link>
           </div>
         </div>
 

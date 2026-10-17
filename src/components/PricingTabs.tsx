@@ -1,4 +1,4 @@
-import { House, Tv, Wifi } from "lucide-react";
+import { House, Tv, Wifi } from "@/components/icons";
 import { hotspotPlans, ksh, monthlyPlans, tvPlan } from "@/lib/site";
 import { PriceCard } from "./PriceCard";
 import { Tabs } from "./Tabs";

@@ -1,7 +1,7 @@
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ChevronRight, PhoneCall, Wifi } from "lucide-react";
+import { ChevronRight, PhoneCall, Wifi } from "@/components/icons";
 import { photos, site } from "@/lib/site";
 import { Reveal } from "./Reveal";
 
@@ -36,7 +36,7 @@ export function SectionTitle({
     <div className={`${center ? "mx-auto max-w-2xl text-center" : ""} ${className}`}>
       {sub && (
         <span className={`mb-4 inline-flex items-center gap-2.5 rounded-full px-4 py-1.5 text-[12px] font-bold uppercase tracking-[0.18em] ${light ? "bg-white/10 text-sky-brand ring-1 ring-white/15" : "bg-primary-50 text-primary-500 ring-1 ring-primary-100"}`}>
-          <Wifi className="h-3.5 w-3.5" strokeWidth={2.5} />
+          <Wifi className="h-3.5 w-3.5" />
           {sub}
         </span>
       )}
@@ -50,7 +50,7 @@ export function SectionTitle({
 export function Breadcrumb({ title, current, image }: { title: string; current: string; image: StaticImageData }) {
   return (
     <section className="relative isolate overflow-hidden bg-navy-950">
-      <Image src={image} alt="" fill priority placeholder="blur" sizes="100vw" className="-z-10 animate-kenburns object-cover" />
+      <Image src={image} alt="" fill priority placeholder="blur" sizes="100vw" className="-z-10 object-cover sm:animate-kenburns" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/95 via-navy-950/80 to-navy-950/40" />
       <div className="container-x relative py-24 lg:py-32">
         <h1 className="animate-fade-up text-[42px] font-semibold leading-tight text-white sm:text-6xl">{title}</h1>

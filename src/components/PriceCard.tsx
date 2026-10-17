@@ -1,4 +1,4 @@
-import { ArrowRight, Check, House, Tv, Wifi } from "lucide-react";
+import { ArrowRight, Check, House, Tv, Wifi } from "@/components/icons";
 import { ksh, planMessage, whatsappLink, type Plan } from "@/lib/site";
 
 const icons = { hotspot: Wifi, monthly: House, tv: Tv };
@@ -47,7 +47,7 @@ export function PriceCard({ plan, kind, featured = false, ribbon }: { plan: Plan
         {features.map((f) => (
           <li key={f} className={`flex items-center gap-3 ${featured ? "text-slate-200" : "text-navy-900"}`}>
             <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${featured ? "bg-sky-brand text-navy-950" : "bg-primary-50 text-primary-500"}`}>
-              <Check className="h-3.5 w-3.5" strokeWidth={3} />
+              <Check className="h-3.5 w-3.5" />
             </span>
             {f}
           </li>

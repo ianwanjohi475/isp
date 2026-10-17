@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "@/components/icons";
 import { Breadcrumb, CtaBand, Hl, SectionTitle } from "@/components/Ui";
 import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";

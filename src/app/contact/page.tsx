@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mail, MessageCircle, PhoneCall } from "lucide-react";
+import { Mail, MessageCircle, PhoneCall } from "@/components/icons";
 import { Breadcrumb, Hl, SectionTitle } from "@/components/Ui";
 import { ContactForm } from "@/components/ContactForm";
 import { MapEmbed } from "@/components/MapEmbed";
@@ -37,7 +37,7 @@ export default function ContactPage() {
                     className="card-fx top-line group block h-full overflow-hidden rounded-2xl border border-line bg-white p-9 text-center"
                   >
                     <span className="mx-auto flex h-[72px] w-[72px] items-center justify-center rounded-full bg-primary-50 text-primary-500 transition group-hover:bg-primary-500 group-hover:text-white">
-                      <Icon className="h-8 w-8" strokeWidth={1.6} />
+                      <Icon className="h-8 w-8" />
                     </span>
                     <h3 className="mt-6 text-2xl">{c.title}</h3>
                     <p className="mt-1 text-sm">{c.note}</p>

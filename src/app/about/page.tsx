@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CheckCircle2, Eye, Target, Zap } from "lucide-react";
+import { CheckCircle2, Eye, Target, Zap } from "@/components/icons";
 import { Breadcrumb, CtaBand, Hl, SectionTitle } from "@/components/Ui";
 import { Photo } from "@/components/Photo";
 import { photos } from "@/lib/site";
@@ -82,7 +82,7 @@ export default function AboutPage() {
             <Reveal>
               <article className="card-fx top-line group h-full overflow-hidden rounded-2xl bg-white p-10 shadow-sm sm:p-12">
                 <span className="flex h-20 w-20 items-center justify-center rounded-full bg-primary-500 text-white">
-                  <Target className="h-9 w-9" strokeWidth={1.5} />
+                  <Target className="h-9 w-9" />
                 </span>
                 <h3 className="mt-8 text-3xl">Our Mission</h3>
                 <p className="mt-4 text-lg">
@@ -93,7 +93,7 @@ export default function AboutPage() {
             <Reveal delay={120}>
               <article className="card-fx group h-full overflow-hidden rounded-2xl bg-navy-900 p-10 text-white sm:p-12">
                 <span className="flex h-20 w-20 items-center justify-center rounded-full bg-sky-brand text-navy-900">
-                  <Eye className="h-9 w-9" strokeWidth={1.5} />
+                  <Eye className="h-9 w-9" />
                 </span>
                 <h3 className="mt-8 text-3xl text-white">Our Vision</h3>
                 <p className="mt-4 text-lg text-slate-300">
@@ -119,7 +119,7 @@ export default function AboutPage() {
               <p>Can&apos;t find your answer? Call us on 0748 349372 or email snetnetworktelecoms@gmail.com.</p>
             </SectionTitle>
             <div className="mt-8 flex items-center gap-4 rounded-2xl bg-gradient-to-r from-primary-500 to-primary-700 p-6 text-white">
-              <Zap className="h-10 w-10" strokeWidth={1.5} />
+              <Zap className="h-10 w-10" />
               <p className="text-lg font-medium">Fast, Stable, Reliable Network</p>
             </div>
           </Reveal>

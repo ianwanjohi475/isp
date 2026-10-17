@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ArrowRight, Clock, Mail, Menu, Phone, PhoneCall, X } from "lucide-react";
+import { ArrowRight, Clock, Mail, Menu, Phone, PhoneCall, X } from "@/components/icons";
 import { Logo } from "./Logo";
 import { nav, site, whatsappLink } from "@/lib/site";
 

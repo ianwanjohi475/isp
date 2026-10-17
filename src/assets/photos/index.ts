@@ -6,6 +6,7 @@ import family from "./family.jpg";
 import tvMatch from "./tv-match.jpg";
 import phoneGolden from "./phone-golden.jpg";
 import wifiDashboard from "./wifi-dashboard.jpg";
+import phoneGoldenSquare from "./phone-golden-square.jpg";
 
 /** All site photography. Replace a .jpg file (same name) to change a picture. */
-export const photos = { cafeHotspot, village, antenna, marketPhone, family, tvMatch, phoneGolden, wifiDashboard };
+export const photos = { cafeHotspot, village, antenna, marketPhone, family, tvMatch, phoneGolden, phoneGoldenSquare, wifiDashboard };

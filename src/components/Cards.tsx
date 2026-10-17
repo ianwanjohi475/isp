@@ -1,7 +1,7 @@
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ArrowRight, CheckSquare } from "lucide-react";
+import { ArrowRight, CheckSquare } from "@/components/icons";
 import { ksh, planMessage, whatsappLink, type Plan } from "@/lib/site";
 
 /** Template-style plan card: photo header, title overlay and a speed tag in the corner. */

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, Gauge, House, PhoneCall, Tv, Wifi, Zap } from "lucide-react";
+import { ArrowRight, CheckCircle2, Gauge, House, PhoneCall, Tv, Wifi, Zap } from "@/components/icons";
 import { HeroSlider } from "@/components/HeroSlider";
 import { PhotoPlanCard } from "@/components/Cards";
 import { Marquee } from "@/components/Marquee";
@@ -34,6 +34,7 @@ export default function Home() {
             per: "1 Hour",
             href: "/packages#hotspot",
             position: "70% center",
+            mobilePosition: "32% center",
           },
           {
             image: photos.village,
@@ -44,6 +45,7 @@ export default function Home() {
             price: "KSh 1,500",
             per: "Month",
             href: "/packages#monthly",
+            mobilePosition: "50% center",
           },
           {
             image: photos.antenna,
@@ -55,6 +57,7 @@ export default function Home() {
             per: "Month",
             href: "/packages#tv",
             position: "35% center",
+            mobilePosition: "36% center",
           },
         ]}
       />
@@ -157,7 +160,7 @@ export default function Home() {
         <div className="container-x grid items-center gap-16 lg:grid-cols-2">
           <Reveal className="relative mx-auto w-full max-w-[520px]">
             <div className="absolute -inset-5 animate-spin-slow rounded-full border-2 border-dashed border-primary-300" />
-            <Photo src={photos.phoneGolden} alt="Smartphone connected to SNET Wi-Fi" className="aspect-square rounded-full shadow-[0_30px_60px_-15px_rgba(11,27,63,0.4)]" imgClassName="object-[30%_center]" />
+            <Photo src={photos.phoneGoldenSquare} alt="Smartphone connected to SNET Wi-Fi" className="aspect-square rounded-full shadow-[0_30px_60px_-15px_rgba(11,27,63,0.4)]" sizes="(min-width: 1024px) 520px, 90vw" />
             <div className="absolute -left-1 top-[22%] flex h-36 w-36 animate-float flex-col items-center justify-center rounded-full bg-primary-500 text-center text-white shadow-xl ring-8 ring-white sm:h-44 sm:w-44">
               <span className="text-xs font-semibold uppercase sm:text-sm">Up to</span>
               <span className="text-4xl font-semibold leading-tight sm:text-5xl">10</span>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Send } from "lucide-react";
+import { Send } from "@/components/icons";
 import { whatsappLink } from "@/lib/site";
 
 export function FooterSignup() {
