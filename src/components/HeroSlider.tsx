@@ -1,13 +1,22 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
-import { useEffect, useState, type CSSProperties } from "react";
-import { ArrowRight, ChevronLeft, ChevronRight, House, PhoneCall, Tv, Wifi } from "@/components/icons";
+import { useEffect, useState } from "react";
+import { ArrowRight, ChevronLeft, ChevronRight, PhoneCall, Wifi } from "@/components/icons";
 import { site } from "@/lib/site";
 
+/** The 3D engine is its own chunk and loads after the text is on screen. */
+const SignalPortrait = dynamic(() => import("./three/SignalPortrait"), { ssr: false });
+
 export type Slide = {
+  /** full photo, used as the fallback when 3D is unavailable */
   image: StaticImageData;
+  /** small texture the particles are built from */
+  particles: StaticImageData;
+  /** horizontal position of the subject in the photo, 0–1 */
+  focus?: number;
   alt: string;
   tag: string;
   title: string;
@@ -15,23 +24,18 @@ export type Slide = {
   price: string;
   per: string;
   href: string;
-  position?: string;
-  /** focal point used on phones, where the photo is cropped much more */
-  mobilePosition?: string;
 };
 
-const DURATION = 7000;
-
-const widget = [
-  { icon: Wifi, name: "Hotspot · 1 Hour to 24 Hours", price: "From KSh 10", href: "/packages#hotspot" },
-  { icon: House, name: "Monthly · 8 to 15 Mbps", price: "From KSh 1,500", href: "/packages#monthly" },
-  { icon: Tv, name: "TV Binding · 8 Mbps", price: "KSh 499 / month", href: "/packages#tv" },
-];
+const DURATION = 9000;
 
 /** Split a title so the last two words can be highlighted. */
 const words = (t: string) => t.split(" ");
 const head = (t: string) => words(t).slice(0, -2).join(" ");
 const tail = (t: string) => words(t).slice(-2).join(" ");
+
+function Bracket({ className }: { className: string }) {
+  return <span aria-hidden="true" className={`absolute h-7 w-7 border-sky-brand/70 ${className}`} />;
+}
 
 export function HeroSlider({ slides }: { slides: Slide[] }) {
   const [i, setI] = useState(0);
@@ -53,41 +57,54 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
       onMouseLeave={() => setPaused(false)}
       aria-roledescription="carousel"
     >
-      {/* background photos */}
-      {slides.map((sl, idx) => (
-        <div
-          key={idx}
-          aria-hidden={idx !== i}
-          className={`absolute inset-0 -z-10 transition-opacity duration-[1200ms] ${idx === i ? "opacity-100" : "opacity-0"}`}
-        >
-          <Image
-            key={idx === i ? `on-${i}` : `off-${idx}`}
-            src={sl.image}
-            alt={sl.alt}
-            fill
-            priority={idx === 0}
-            placeholder="blur"
-            sizes="100vw"
-            className={`object-cover object-[var(--pos-m)] sm:object-[var(--pos)] ${idx === i ? "sm:animate-kenburns" : ""}`}
-            style={{ "--pos": sl.position ?? "center", "--pos-m": sl.mobilePosition ?? sl.position ?? "center" } as CSSProperties}
-          />
-        </div>
-      ))}
-      {/* phones: lighter, bottom-weighted overlay so the photo stays visible */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-navy-950/55 via-navy-950/35 to-navy-950/90 sm:hidden" />
-      <div className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-navy-950/95 via-navy-950/70 to-navy-950/30 sm:block" />
-      <div className="absolute inset-x-0 top-0 -z-10 h-56 bg-gradient-to-b from-navy-950/80 to-transparent" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950/70 via-transparent to-transparent" />
+      {/* deep-space backdrop */}
+      <div className="absolute inset-0 -z-20 bg-[radial-gradient(90%_70%_at_75%_35%,#12307a_0%,#081433_45%,#040b1f_100%)]" />
+      <div className="grid-floor absolute inset-x-[-20%] bottom-0 -z-20 hidden h-[46%] lg:block" />
 
-      <div className="container-x grid min-h-[600px] items-center gap-12 pb-48 pt-32 sm:min-h-[800px] sm:pb-44 sm:pt-44 lg:min-h-[860px] lg:grid-cols-[1.35fr_1fr]">
-        <div key={i} className="max-w-2xl">
+      {/* THE LIVING SIGNAL — particle hologram of the people in the photos */}
+      <SignalPortrait
+        className="absolute inset-0 -z-10"
+        index={i}
+        scenes={slides.map((sl) => ({ src: sl.particles.src, focus: sl.focus }))}
+        fallback={
+          <div className="absolute inset-0">
+            <Image src={s.image} alt={s.alt} fill sizes="100vw" placeholder="blur" className="object-cover opacity-60" />
+          </div>
+        }
+      />
+
+      {/* legibility veils */}
+      <div className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-navy-950 via-navy-950/55 to-transparent lg:block lg:w-[58%]" />
+      <div className="absolute inset-x-0 bottom-0 -z-10 h-[62%] bg-gradient-to-t from-navy-950 via-navy-950/85 to-transparent lg:hidden" />
+      <div className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-navy-950/80 to-transparent" />
+
+      {/* HUD frame around the hologram (desktop) */}
+      <div aria-hidden="true" className="pointer-events-none absolute bottom-[19%] right-[4%] top-[17%] hidden w-[50%] lg:block">
+        <Bracket className="left-0 top-0 border-l-2 border-t-2" />
+        <Bracket className="right-0 top-0 border-r-2 border-t-2" />
+        <Bracket className="bottom-0 left-0 border-b-2 border-l-2" />
+        <Bracket className="bottom-0 right-0 border-b-2 border-r-2" />
+        <span className="absolute right-10 top-0 flex -translate-y-1/2 items-center gap-2 rounded-full bg-navy-950/70 px-3 py-1 font-display text-[11px] font-bold uppercase tracking-[0.2em] text-sky-brand ring-1 ring-sky-brand/40 backdrop-blur">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400" />
+            <span className="relative h-2 w-2 rounded-full bg-emerald-400" />
+          </span>
+          Live signal
+        </span>
+        <span key={i} className="animate-fade-up absolute bottom-0 left-10 translate-y-1/2 rounded-full bg-navy-950/70 px-3 py-1 font-display text-[11px] font-bold uppercase tracking-[0.2em] text-white ring-1 ring-white/20 backdrop-blur">
+          0{i + 1} · {s.tag}
+        </span>
+      </div>
+
+      <div className="container-x flex min-h-[820px] flex-col justify-end pb-48 pt-[330px] sm:min-h-[860px] lg:min-h-[860px] lg:justify-center lg:pb-44 lg:pt-44">
+        <div key={i} className="max-w-xl lg:max-w-[46%]">
           <p className="animate-fade-up inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-white">
             <Wifi className="h-3.5 w-3.5 text-sky-brand" /> {s.tag}
           </p>
-          <h1 className="animate-fade-up mt-5 text-[36px] font-extrabold [text-shadow:0_2px_24px_rgb(4_11_31/0.5)] leading-[1.06] text-white [animation-delay:120ms] sm:text-6xl xl:text-[74px]">
+          <h1 className="animate-fade-up mt-5 text-[36px] font-extrabold leading-[1.06] text-white [animation-delay:120ms] [text-shadow:0_2px_24px_rgb(4_11_31/0.6)] sm:text-6xl xl:text-[70px]">
             {head(s.title)} <span className="bg-gradient-to-r from-sky-brand to-primary-300 bg-clip-text text-transparent">{tail(s.title)}</span>
           </h1>
-          <p className="animate-fade-up mt-5 max-w-lg text-base text-slate-100 [animation-delay:240ms] [text-shadow:0_1px_12px_rgb(4_11_31/0.6)] sm:mt-6 sm:text-lg">{s.text}</p>
+          <p className="animate-fade-up mt-5 max-w-lg text-base text-slate-200 [animation-delay:240ms] sm:mt-6 sm:text-lg">{s.text}</p>
           <p className="animate-fade-up mt-7 flex items-baseline gap-2 [animation-delay:360ms]">
             <span className="font-display text-5xl font-extrabold text-white sm:text-6xl">{s.price}</span>
             <span className="text-slate-300">/{s.per}</span>
@@ -97,42 +114,6 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
               Get started <ArrowRight className="h-4 w-4" />
             </Link>
             <Link href="/packages" className="btn-light px-6 sm:px-8">All packages</Link>
-          </div>
-        </div>
-
-        {/* glass price widget */}
-        <div className="relative hidden justify-self-end lg:block">
-          <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-80 w-80 -translate-x-1/2 -translate-y-1/2">
-            <span className="absolute inset-0 animate-wave rounded-full border-2 border-sky-brand/40" />
-            <span className="absolute inset-0 animate-wave rounded-full border-2 border-sky-brand/30 [animation-delay:0.8s]" />
-            <span className="absolute inset-0 animate-wave rounded-full border-2 border-sky-brand/20 [animation-delay:1.6s]" />
-          </div>
-          <div className="glass w-[360px] animate-float rounded-3xl p-7 shadow-2xl shadow-black/30">
-            <div className="flex items-center justify-between">
-              <p className="font-display text-lg font-bold text-white">Our Packages</p>
-              <span className="flex items-center gap-1.5 rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Online
-              </span>
-            </div>
-            <ul className="mt-5 space-y-3">
-              {widget.map((w) => {
-                const Icon = w.icon;
-                return (
-                  <li key={w.name}>
-                    <Link href={w.href} className="group flex items-center gap-4 rounded-2xl bg-white/5 p-3.5 ring-1 ring-white/10 transition hover:bg-white/15">
-                      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-500 text-white transition group-hover:bg-sky-brand">
-                        <Icon className="h-5 w-5" />
-                      </span>
-                      <span className="flex-1">
-                        <span className="block text-sm text-slate-300">{w.name}</span>
-                        <span className="block font-display font-bold text-white">{w.price}</span>
-                      </span>
-                      <ArrowRight className="h-4 w-4 text-white/60 transition group-hover:translate-x-1 group-hover:text-white" />
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
           </div>
         </div>
       </div>

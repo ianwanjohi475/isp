@@ -63,7 +63,7 @@
 }
 
 @layer base {
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
   body { @apply bg-white font-sans text-[15px] leading-7 text-body antialiased; }
   h1, h2, h3, h4, h5 { @apply font-display font-bold tracking-tight text-navy-900; }
   ::selection { @apply bg-primary-500 text-white; }
@@ -158,7 +158,35 @@
 .bar { transform: scaleX(0); transform-origin: left; transition: transform 1.4s cubic-bezier(.2,.7,.2,1); }
 .is-visible .bar { transform: scaleX(1); }
 
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1); }
+/* 3D tilt cards */
+.tilt {
+  position: relative; height: 100%;
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform .25s cubic-bezier(.2,.7,.2,1); will-change: transform;
+}
+.tilt-glare {
+  position: absolute; inset: 0; z-index: 6; pointer-events: none; border-radius: 1.5rem; opacity: var(--ga, 0);
+  background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 50%), rgb(255 255 255 / .22), transparent 60%);
+  transition: opacity .35s ease; mix-blend-mode: soft-light;
+}
+
+/* 3D orbit rings (pure CSS) */
+.orbit3d { position: absolute; inset: -9%; transform-style: preserve-3d; transform: perspective(900px) rotateX(72deg) rotateY(-12deg); pointer-events: none; }
+.orbit3d > span { position: absolute; inset: 0; border-radius: 9999px; border: 2px solid rgb(31 181 239 / .55); animation: spin 14s linear infinite; }
+.orbit3d > span::after { content: ""; position: absolute; top: -7px; left: 50%; width: 14px; height: 14px; margin-left: -7px; border-radius: 9999px; background: #1fb5ef; box-shadow: 0 0 18px 4px rgb(31 181 239 / .8); }
+.orbit3d.alt { inset: -16%; transform: perspective(900px) rotateX(66deg) rotateY(24deg); }
+.orbit3d.alt > span { border-color: rgb(31 98 236 / .4); animation-duration: 22s; animation-direction: reverse; }
+
+/* Perspective grid floor */
+.grid-floor {
+  background-image: linear-gradient(to right, rgb(79 134 247 / .35) 1px, transparent 1px), linear-gradient(to bottom, rgb(79 134 247 / .35) 1px, transparent 1px);
+  background-size: 64px 64px; transform: perspective(520px) rotateX(64deg); transform-origin: center bottom;
+  animation: floor 5s linear infinite;
+  -webkit-mask-image: linear-gradient(to top, #000 5%, transparent 85%); mask-image: linear-gradient(to top, #000 5%, transparent 85%);
+}
+@keyframes floor { to { background-position: 0 64px; } }
+
+.reveal { opacity: 0; transform: perspective(1200px) translateY(36px) rotateX(-10deg) scale(0.985); transform-origin: center top; transition: opacity 0.8s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .reveal.is-visible { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {

@@ -10,6 +10,9 @@ import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
 import { Hl, SectionTitle, CtaBand } from "@/components/Ui";
 import { Faq } from "@/components/Faq";
+import { particles } from "@/assets/particles";
+import { Tilt } from "@/components/Tilt";
+import { GlobeLazy } from "@/components/three/GlobeLazy";
 import { hotspotPlans, ksh, monthlyPlans, photos, planMessage, site, tvPlan, whatsappLink } from "@/lib/site";
 
 const quick = [
@@ -26,6 +29,8 @@ export default function Home() {
         slides={[
           {
             image: photos.cafeHotspot,
+            particles: particles.cafeHotspot,
+            focus: 0.36,
             alt: "Customer browsing on SNET hotspot Wi-Fi at a market café",
             tag: "Hotspot Services",
             title: "Journey With Fast & Stable Internet",
@@ -33,31 +38,30 @@ export default function Home() {
             price: "KSh 10",
             per: "1 Hour",
             href: "/packages#hotspot",
-            position: "70% center",
-            mobilePosition: "32% center",
           },
           {
-            image: photos.village,
-            alt: "Village connected by SNET Networks at golden hour",
+            image: photos.family,
+            particles: particles.family,
+            focus: 0.55,
+            alt: "Family enjoying SNET monthly internet at home",
             tag: "Monthly Services",
             title: "Bringing The World Closer To Our Communities",
             text: "Monthly internet at 8 Mbps, 10 Mbps and 15 Mbps for homes and businesses.",
             price: "KSh 1,500",
             per: "Month",
             href: "/packages#monthly",
-            mobilePosition: "50% center",
           },
           {
-            image: photos.antenna,
-            alt: "SNET wireless antenna over a city market",
+            image: photos.tvMatch,
+            particles: particles.tvMatch,
+            focus: 0.5,
+            alt: "Friends watching football with SNET TV Binding",
             tag: "TV Binding Services",
             title: "Fast, Stable, Reliable Network",
             text: "TV Binding at 8 Mbps — stream on your TV for one monthly price.",
             price: "KSh 499",
             per: "Month",
             href: "/packages#tv",
-            position: "35% center",
-            mobilePosition: "36% center",
           },
         ]}
       />
@@ -69,6 +73,7 @@ export default function Home() {
             const Icon = q.icon;
             return (
               <Reveal key={q.label} delay={i * 90}>
+                <Tilt max={7}>
                 <Link
                   href={q.href}
                   className="card-fx top-line group flex h-full items-center gap-4 rounded-2xl bg-white p-5 shadow-[0_20px_50px_-15px_rgba(11,27,63,0.25)] sm:p-6"
@@ -82,6 +87,7 @@ export default function Home() {
                     <span className="block text-sm text-primary-500">{q.note}</span>
                   </span>
                 </Link>
+                </Tilt>
               </Reveal>
             );
           })}
@@ -100,6 +106,7 @@ export default function Home() {
           </Reveal>
           <div className="mt-14 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
             <Reveal>
+              <Tilt>
               <PhotoPlanCard
                 image={photos.marketPhone}
                 title={<>Hotspot <br />Services</>}
@@ -109,8 +116,10 @@ export default function Home() {
                 per="Hour"
                 href="/packages#hotspot"
               />
+              </Tilt>
             </Reveal>
             <Reveal delay={120}>
+              <Tilt>
               <PhotoPlanCard
                 image={photos.family}
                 title={<>Monthly <br />Services</>}
@@ -120,8 +129,10 @@ export default function Home() {
                 per="Month"
                 href="/packages#monthly"
               />
+              </Tilt>
             </Reveal>
             <Reveal delay={240} className="md:col-span-2 lg:col-span-1">
+              <Tilt>
               <PhotoPlanCard
                 image={photos.tvMatch}
                 title={<>TV Binding <br />Services</>}
@@ -131,6 +142,7 @@ export default function Home() {
                 per="Month"
                 href="/packages#tv"
               />
+              </Tilt>
             </Reveal>
           </div>
         </div>
@@ -159,7 +171,8 @@ export default function Home() {
       <section className="section-space overflow-hidden">
         <div className="container-x grid items-center gap-16 lg:grid-cols-2">
           <Reveal className="relative mx-auto w-full max-w-[520px]">
-            <div className="absolute -inset-5 animate-spin-slow rounded-full border-2 border-dashed border-primary-300" />
+            <div className="orbit3d"><span /></div>
+            <div className="orbit3d alt"><span /></div>
             <Photo src={photos.phoneGoldenSquare} alt="Smartphone connected to SNET Wi-Fi" className="aspect-square rounded-full shadow-[0_30px_60px_-15px_rgba(11,27,63,0.4)]" sizes="(min-width: 1024px) 520px, 90vw" />
             <div className="absolute -left-1 top-[22%] flex h-36 w-36 animate-float flex-col items-center justify-center rounded-full bg-primary-500 text-center text-white shadow-xl ring-8 ring-white sm:h-44 sm:w-44">
               <span className="text-xs font-semibold uppercase sm:text-sm">Up to</span>
@@ -253,13 +266,13 @@ export default function Home() {
             <Faq />
           </Reveal>
           <Reveal delay={120} className="lg:pt-24">
-            <div className="rounded-3xl bg-white p-8 shadow-[0_20px_50px_-20px_rgba(11,27,63,0.2)] sm:p-10">
-              <h3 className="text-3xl font-semibold">Our Growing Hotspot Network</h3>
+            <div className="relative overflow-hidden rounded-3xl bg-navy-950 p-8 text-slate-300 shadow-[0_30px_60px_-20px_rgba(11,27,63,0.5)] sm:p-10">
+              <h3 className="text-3xl font-semibold text-white">Our Growing Hotspot Network</h3>
               <p className="mt-3">
                 Bringing the world closer to our communities — in rural areas, markets, entertainment joints and education centres,
                 one hotspot at a time.
               </p>
-              <CoverageMap className="mx-auto mt-6 w-full max-w-[380px]" />
+              <GlobeLazy lite className="mx-auto mt-4 aspect-square w-full max-w-[380px]" fallback={<CoverageMap className="h-full w-full" />} />
               <div className="mt-4 text-center">
                 <Link href="/contact#map" className="btn bg-[#16b26b] text-white hover:bg-navy-900">
                   <CheckCircle2 className="h-4 w-4" /> Check your network coverage
