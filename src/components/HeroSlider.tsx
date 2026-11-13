@@ -49,6 +49,62 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
   const go = (d: number) => setI((v) => (v + d + n) % n);
   const s = slides[i];
 
+  /* ---- manual control: drag / swipe the front card, arrow keys ---- */
+  const cards = useRef<(HTMLButtonElement | null)[]>([]);
+  const drag = useRef({ on: false, id: -1, x0: 0, dx: 0, t0: 0, moved: false });
+  const [dragging, setDragging] = useState(false);
+  const [hint, setHint] = useState(true);
+
+  const paint = (dx: number) => {
+    const el = cards.current[i];
+    if (!el) return;
+    if (dx === 0) {
+      el.style.transition = "";
+      el.style.transform = "";
+      return;
+    }
+    el.style.transition = "none";
+    el.style.transform = `translate3d(${dx}px, ${Math.abs(dx) * -0.06}px, 40px) rotateZ(${dx * 0.035}deg) rotateY(${dx * 0.05}deg)`;
+  };
+  const onDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    drag.current = { on: true, id: e.pointerId, x0: e.clientX, dx: 0, t0: performance.now(), moved: false };
+  };
+  const onDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    const d = drag.current;
+    if (!d.on || e.pointerId !== d.id) return;
+    d.dx = e.clientX - d.x0;
+    if (!d.moved && Math.abs(d.dx) > 6) {
+      d.moved = true;
+      setDragging(true);
+      setPaused(true);
+      e.currentTarget.setPointerCapture(e.pointerId);
+    }
+    if (d.moved) paint(d.dx);
+  };
+  const onUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    const d = drag.current;
+    if (!d.on || e.pointerId !== d.id) return;
+    d.on = false;
+    if (!d.moved) return;
+    const speed = Math.abs(d.dx) / Math.max(1, performance.now() - d.t0); // px per ms
+    const far = Math.abs(d.dx) > 80 || (speed > 0.45 && Math.abs(d.dx) > 24);
+    paint(0); // hand the card back to the CSS deck positions, which animate it
+    setDragging(false);
+    setPaused(false);
+    if (far) {
+      setHint(false);
+      go(d.dx < 0 ? 1 : -1);
+    }
+  };
+  const onKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "ArrowRight") go(1);
+    else if (e.key === "ArrowLeft") go(-1);
+    else return;
+    e.preventDefault();
+    setHint(false);
+  };
+
   // mouse parallax: the deck leans a few degrees, chips drift at their own depth
   const onMove = (e: React.PointerEvent<HTMLElement>) => {
     if (e.pointerType !== "mouse") return;
@@ -124,7 +180,17 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
 
         {/* photo deck */}
         <div className="deck order-1 mx-auto w-full max-w-[400px] px-6 sm:max-w-[460px] lg:order-2 lg:max-w-[470px] lg:px-0">
-          <div className="deck-stage relative aspect-[4/4.6]">
+          <div
+            className={`deck-stage relative aspect-[4/4.6] touch-pan-y select-none outline-none ${dragging ? "cursor-grabbing" : "cursor-grab"}`}
+            onPointerDown={onDown}
+            onPointerMove={onDrag}
+            onPointerUp={onUp}
+            onPointerCancel={onUp}
+            onKeyDown={onKey}
+            tabIndex={0}
+            role="group"
+            aria-label="Service photos. Drag, swipe or use the arrow keys to change."
+          >
             {slides.map((sl, idx) => {
               const pos = (idx - i + n) % n;
               return (
@@ -132,10 +198,20 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
                   key={idx}
                   type="button"
                   data-pos={pos}
-                  onClick={() => setI(idx)}
+                  ref={(el) => {
+                    cards.current[idx] = el;
+                  }}
+                  draggable={false}
+                  onClick={() => {
+                    if (drag.current.moved) return; // that was a drag, not a click
+                    if (pos !== 0) {
+                      setI(idx);
+                      setHint(false);
+                    }
+                  }}
                   tabIndex={pos === 0 ? -1 : 0}
                   aria-label={pos === 0 ? sl.alt : `Show ${sl.tag}`}
-                  className="deck-card overflow-hidden rounded-[28px] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.65)] ring-1 ring-white/15"
+                  className="deck-card cursor-[inherit] overflow-hidden rounded-[28px] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.65)] ring-1 ring-white/15"
                 >
                   <Image
                     src={sl.image}
@@ -144,7 +220,8 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
                     priority={idx === 0}
                     placeholder="blur"
                     sizes="(min-width: 1024px) 520px, 90vw"
-                    className="object-cover"
+                    draggable={false}
+                    className="pointer-events-none object-cover"
                     style={{ objectPosition: sl.focus ?? "center" }}
                   />
                   <span className="absolute inset-0 bg-gradient-to-t from-navy-950/85 via-transparent to-transparent" />
@@ -199,8 +276,8 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
                   <defs>
                     <path id="seal" d="M50 50 m-37 0 a37 37 0 1 1 74 0 a37 37 0 1 1 -74 0" />
                   </defs>
-                  <text fill="#fff" fontSize="9.4" fontWeight="700" letterSpacing="2.3" fontFamily="var(--font-display)">
-                    <textPath href="#seal">FAST • STABLE • RELIABLE • NETWORK •</textPath>
+                  <text fill="#fff" fontSize="9" fontWeight="700" fontFamily="var(--font-display)">
+                    <textPath href="#seal" textLength="226" lengthAdjust="spacing">FAST • STABLE • RELIABLE • NETWORK •</textPath>
                   </text>
                 </svg>
                 <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-primary-500">
@@ -209,6 +286,12 @@ export function HeroSlider({ slides }: { slides: Slide[] }) {
               </div>
             </div>
           </div>
+          <p
+            aria-hidden="true"
+            className={`mt-7 flex items-center justify-center gap-2 lg:justify-start lg:pl-1 text-xs font-semibold uppercase tracking-[0.2em] text-white/60 transition-opacity duration-500 ${hint ? "opacity-100" : "opacity-0"}`}
+          >
+            <ChevronLeft className="h-3.5 w-3.5 animate-pulse" /> Drag or swipe <ChevronRight className="h-3.5 w-3.5 animate-pulse" />
+          </p>
         </div>
       </div>
 
