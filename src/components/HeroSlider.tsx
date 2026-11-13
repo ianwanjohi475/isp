@@ -1,126 +1,220 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { ArrowRight, ChevronLeft, ChevronRight, PhoneCall, Wifi } from "@/components/icons";
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, ChevronLeft, ChevronRight, Gauge, PhoneCall, Wifi } from "@/components/icons";
 import { site } from "@/lib/site";
 
-/** The 3D engine is its own chunk and loads after the text is on screen. */
-const SignalPortrait = dynamic(() => import("./three/SignalPortrait"), { ssr: false });
-
 export type Slide = {
-  /** full photo, used as the fallback when 3D is unavailable */
   image: StaticImageData;
-  /** small texture the particles are built from */
-  particles: StaticImageData;
-  /** horizontal position of the subject in the photo, 0–1 */
-  focus?: number;
+  /** CSS object-position that keeps the subject in the portrait crop */
+  focus?: string;
   alt: string;
   tag: string;
   title: string;
   text: string;
   price: string;
   per: string;
+  speed: string;
   href: string;
 };
 
-const DURATION = 9000;
+const DURATION = 7000;
 
 /** Split a title so the last two words can be highlighted. */
 const words = (t: string) => t.split(" ");
 const head = (t: string) => words(t).slice(0, -2).join(" ");
 const tail = (t: string) => words(t).slice(-2).join(" ");
 
-function Bracket({ className }: { className: string }) {
-  return <span aria-hidden="true" className={`absolute h-7 w-7 border-sky-brand/70 ${className}`} />;
-}
+const stats = [
+  { v: "15 Mbps", l: "Top speed" },
+  { v: "KSh 10", l: "Starting price" },
+  { v: "3", l: "Services" },
+];
 
 export function HeroSlider({ slides }: { slides: Slide[] }) {
   const [i, setI] = useState(0);
   const [paused, setPaused] = useState(false);
+  const root = useRef<HTMLElement>(null);
+  const raf = useRef(0);
+  const n = slides.length;
 
   useEffect(() => {
     if (paused) return;
-    const t = setTimeout(() => setI((v) => (v + 1) % slides.length), DURATION);
+    const t = setTimeout(() => setI((v) => (v + 1) % n), DURATION);
     return () => clearTimeout(t);
-  }, [i, paused, slides.length]);
+  }, [i, paused, n]);
 
-  const go = (d: number) => setI((v) => (v + d + slides.length) % slides.length);
+  const go = (d: number) => setI((v) => (v + d + n) % n);
   const s = slides[i];
+
+  // mouse parallax: the deck leans a few degrees, chips drift at their own depth
+  const onMove = (e: React.PointerEvent<HTMLElement>) => {
+    if (e.pointerType !== "mouse") return;
+    const el = root.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width - 0.5) * 2;
+    const y = ((e.clientY - r.top) / r.height - 0.5) * 2;
+    cancelAnimationFrame(raf.current);
+    raf.current = requestAnimationFrame(() => {
+      el.style.setProperty("--px", x.toFixed(3));
+      el.style.setProperty("--py", y.toFixed(3));
+    });
+  };
+  const onLeave = () => {
+    setPaused(false);
+    root.current?.style.setProperty("--px", "0");
+    root.current?.style.setProperty("--py", "0");
+  };
 
   return (
     <section
+      ref={root}
       className="relative isolate overflow-hidden bg-navy-950"
       onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
       aria-roledescription="carousel"
     >
-      {/* deep-space backdrop */}
-      <div className="absolute inset-0 -z-20 bg-[radial-gradient(90%_70%_at_75%_35%,#12307a_0%,#081433_45%,#040b1f_100%)]" />
-      <div className="grid-floor absolute inset-x-[-20%] bottom-0 -z-20 hidden h-[46%] lg:block" />
+      {/* backdrop: deep navy with slow aurora light */}
+      <div className="absolute inset-0 -z-20 bg-[linear-gradient(135deg,#040b1f_0%,#081433_45%,#0b1f55_100%)]" />
+      <div className="aurora -left-[10%] top-[8%] -z-10 h-[420px] w-[420px] bg-primary-600" />
+      <div className="aurora right-[2%] top-[18%] -z-10 h-[520px] w-[520px] bg-primary-500 [animation-delay:-6s]" />
+      <div className="aurora bottom-[-12%] right-[28%] -z-10 h-[360px] w-[360px] bg-sky-brand/70 [animation-delay:-11s]" />
+      <svg aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-56 w-full text-white/[0.07]" viewBox="0 0 1440 220" preserveAspectRatio="none" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M0 150 C 240 60, 420 220, 720 130 S 1200 40, 1440 120" />
+        <path d="M0 180 C 260 100, 460 240, 760 160 S 1220 80, 1440 150" />
+        <path d="M0 120 C 220 30, 400 190, 700 100 S 1180 10, 1440 90" />
+      </svg>
 
-      {/* THE LIVING SIGNAL — particle hologram of the people in the photos */}
-      <SignalPortrait
-        className="absolute inset-0 -z-10"
-        index={i}
-        scenes={slides.map((sl) => ({ src: sl.particles.src, focus: sl.focus }))}
-        fallback={
-          <div className="absolute inset-0">
-            <Image src={s.image} alt={s.alt} fill sizes="100vw" placeholder="blur" className="object-cover opacity-60" />
-          </div>
-        }
-      />
-
-      {/* legibility veils */}
-      <div className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-navy-950 via-navy-950/55 to-transparent lg:block lg:w-[58%]" />
-      <div className="absolute inset-x-0 bottom-0 -z-10 h-[62%] bg-gradient-to-t from-navy-950 via-navy-950/85 to-transparent lg:hidden" />
-      <div className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-navy-950/80 to-transparent" />
-
-      {/* HUD frame around the hologram (desktop) */}
-      <div aria-hidden="true" className="pointer-events-none absolute bottom-[19%] right-[4%] top-[17%] hidden w-[50%] lg:block">
-        <Bracket className="left-0 top-0 border-l-2 border-t-2" />
-        <Bracket className="right-0 top-0 border-r-2 border-t-2" />
-        <Bracket className="bottom-0 left-0 border-b-2 border-l-2" />
-        <Bracket className="bottom-0 right-0 border-b-2 border-r-2" />
-        <span className="absolute right-10 top-0 flex -translate-y-1/2 items-center gap-2 rounded-full bg-navy-950/70 px-3 py-1 font-display text-[11px] font-bold uppercase tracking-[0.2em] text-sky-brand ring-1 ring-sky-brand/40 backdrop-blur">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400" />
-            <span className="relative h-2 w-2 rounded-full bg-emerald-400" />
-          </span>
-          Live signal
-        </span>
-        <span key={i} className="animate-fade-up absolute bottom-0 left-10 translate-y-1/2 rounded-full bg-navy-950/70 px-3 py-1 font-display text-[11px] font-bold uppercase tracking-[0.2em] text-white ring-1 ring-white/20 backdrop-blur">
-          0{i + 1} · {s.tag}
-        </span>
-      </div>
-
-      <div className="container-x flex min-h-[820px] flex-col justify-end pb-48 pt-[330px] sm:min-h-[860px] lg:min-h-[860px] lg:justify-center lg:pb-44 lg:pt-44">
-        <div key={i} className="max-w-xl lg:max-w-[46%]">
+      <div className="container-x grid items-center gap-10 pb-48 pt-28 md:pt-40 lg:min-h-[880px] lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:pb-44 lg:pt-44">
+        {/* copy */}
+        <div key={i} className="order-2 lg:order-1">
           <p className="animate-fade-up inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-white">
             <Wifi className="h-3.5 w-3.5 text-sky-brand" /> {s.tag}
           </p>
-          <h1 className="animate-fade-up mt-5 text-[36px] font-extrabold leading-[1.06] text-white [animation-delay:120ms] [text-shadow:0_2px_24px_rgb(4_11_31/0.6)] sm:text-6xl xl:text-[70px]">
+          <h1 className="animate-fade-up mt-5 text-[38px] font-extrabold leading-[1.06] text-white [animation-delay:100ms] sm:text-6xl xl:text-[68px]">
             {head(s.title)} <span className="bg-gradient-to-r from-sky-brand to-primary-300 bg-clip-text text-transparent">{tail(s.title)}</span>
           </h1>
-          <p className="animate-fade-up mt-5 max-w-lg text-base text-slate-200 [animation-delay:240ms] sm:mt-6 sm:text-lg">{s.text}</p>
-          <p className="animate-fade-up mt-7 flex items-baseline gap-2 [animation-delay:360ms]">
-            <span className="font-display text-5xl font-extrabold text-white sm:text-6xl">{s.price}</span>
-            <span className="text-slate-300">/{s.per}</span>
-          </p>
-          <div className="animate-fade-up mt-8 flex flex-wrap gap-3 [animation-delay:480ms] sm:mt-9 sm:gap-4">
+          <p className="animate-fade-up mt-5 max-w-lg text-base text-slate-300 [animation-delay:200ms] sm:text-lg">{s.text}</p>
+          <div className="animate-fade-up mt-7 flex flex-wrap items-center gap-x-6 gap-y-4 [animation-delay:300ms]">
+            <p className="flex items-baseline gap-2">
+              <span className="font-display text-5xl font-extrabold text-white sm:text-6xl">{s.price}</span>
+              <span className="text-slate-400">/{s.per}</span>
+            </p>
+          </div>
+          <div className="animate-fade-up mt-8 flex flex-wrap gap-3 [animation-delay:400ms] sm:gap-4">
             <Link href={s.href} className="btn-primary px-6 hover:bg-white hover:text-navy-900 sm:px-8">
               Get started <ArrowRight className="h-4 w-4" />
             </Link>
             <Link href="/packages" className="btn-light px-6 sm:px-8">All packages</Link>
+          </div>
+          <dl className="animate-fade-up mt-10 hidden max-w-md grid-cols-3 divide-x divide-white/10 border-t border-white/10 pt-7 [animation-delay:500ms] sm:grid">
+            {stats.map((st, k) => (
+              <div key={st.l} className={k ? "pl-6" : ""}>
+                <dt className="sr-only">{st.l}</dt>
+                <dd className="font-display text-2xl font-extrabold text-white">{st.v}</dd>
+                <dd className="mt-0.5 text-sm text-slate-400">{st.l}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        {/* photo deck */}
+        <div className="deck order-1 mx-auto w-full max-w-[400px] px-6 sm:max-w-[460px] lg:order-2 lg:max-w-[470px] lg:px-0">
+          <div className="deck-stage relative aspect-[4/4.6]">
+            {slides.map((sl, idx) => {
+              const pos = (idx - i + n) % n;
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  data-pos={pos}
+                  onClick={() => setI(idx)}
+                  tabIndex={pos === 0 ? -1 : 0}
+                  aria-label={pos === 0 ? sl.alt : `Show ${sl.tag}`}
+                  className="deck-card overflow-hidden rounded-[28px] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.65)] ring-1 ring-white/15"
+                >
+                  <Image
+                    src={sl.image}
+                    alt={pos === 0 ? sl.alt : ""}
+                    fill
+                    priority={idx === 0}
+                    placeholder="blur"
+                    sizes="(min-width: 1024px) 520px, 90vw"
+                    className="object-cover"
+                    style={{ objectPosition: sl.focus ?? "center" }}
+                  />
+                  <span className="absolute inset-0 bg-gradient-to-t from-navy-950/85 via-transparent to-transparent" />
+                  <span className="absolute inset-x-6 bottom-6 flex items-end justify-between text-left">
+                    <span>
+                      <span className="block text-xs font-bold uppercase tracking-[0.18em] text-sky-brand">{sl.tag}</span>
+                      <span className="mt-1 block font-display text-2xl font-extrabold text-white">
+                        {sl.price}
+                        <span className="text-sm font-medium text-slate-300"> /{sl.per}</span>
+                      </span>
+                    </span>
+                    <span className="font-display text-sm font-bold text-white/70">
+                      0{idx + 1}
+                      <span className="text-white/40"> / 0{n}</span>
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
+
+            {/* floating glass chips at their own depth */}
+            <div className="deck-float pointer-events-none absolute -left-5 top-10 z-40 sm:-left-12" style={{ "--d": -18 } as React.CSSProperties}>
+              <div className="flex items-center gap-3 rounded-2xl border border-white/15 bg-navy-900/95 px-4 py-3 shadow-2xl">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-500 text-white">
+                  <Gauge className="h-5 w-5" />
+                </span>
+                <span>
+                  <span className="block text-[11px] font-semibold uppercase tracking-wider text-sky-brand">Speed</span>
+                  <span className="block font-display text-lg font-extrabold leading-tight text-white">{s.speed}</span>
+                </span>
+              </div>
+            </div>
+            <div className="deck-float pointer-events-none absolute -right-4 bottom-28 z-40 sm:-right-10" style={{ "--d": 22 } as React.CSSProperties}>
+              <div className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-2xl">
+                <span className="bars flex h-7 items-end gap-[3px] text-primary-500">
+                  <span className="h-2" />
+                  <span className="h-3.5" />
+                  <span className="h-5" />
+                  <span className="h-7" />
+                </span>
+                <span>
+                  <span className="block font-display text-sm font-extrabold leading-tight text-navy-900">Fast · Stable</span>
+                  <span className="block text-xs text-body">Reliable Network</span>
+                </span>
+              </div>
+            </div>
+
+            {/* rotating seal */}
+            <div className="deck-float pointer-events-none absolute -right-6 -top-8 z-40 hidden h-28 w-28 sm:block lg:-right-10 lg:-top-10 lg:h-32 lg:w-32" style={{ "--d": 12 } as React.CSSProperties}>
+              <div className="relative flex h-full w-full items-center justify-center rounded-full bg-primary-500 shadow-2xl shadow-primary-900/50">
+                <svg viewBox="0 0 100 100" className="absolute inset-0 animate-spin-slow" aria-hidden="true">
+                  <defs>
+                    <path id="seal" d="M50 50 m-37 0 a37 37 0 1 1 74 0 a37 37 0 1 1 -74 0" />
+                  </defs>
+                  <text fill="#fff" fontSize="9.4" fontWeight="700" letterSpacing="2.3" fontFamily="var(--font-display)">
+                    <textPath href="#seal">FAST • STABLE • RELIABLE • NETWORK •</textPath>
+                  </text>
+                </svg>
+                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-primary-500">
+                  <Wifi className="h-6 w-6" />
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* controls + customer service */}
       <div className="absolute inset-x-0 bottom-28 sm:bottom-32">
-        <div className="container-x flex flex-col-reverse items-start justify-between gap-6 sm:flex-row sm:items-end">
+        <div className="container-x flex items-end justify-between gap-6">
           <div className="flex items-center gap-4">
             <button type="button" onClick={() => go(-1)} aria-label="Previous slide" className="glass flex h-12 w-12 items-center justify-center rounded-full text-white transition hover:bg-primary-500">
               <ChevronLeft className="h-5 w-5" />

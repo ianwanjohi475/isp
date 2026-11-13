@@ -26,17 +26,13 @@ Everything (prices, speeds, phone, email, map location) lives in **`src/lib/site
 - Change `mapQuery` to your town / office (e.g. `"Kitengela Market, Kenya"`) to update all maps.
 - Change `url` to your real domain for SEO.
 
-## 3D
+## Hero & motion
 
-- **The Living Signal** (`src/components/three/SignalPortrait.tsx`): the hero hologram. ~46,000 light
-  particles (15,000 on phones) sample the hero photos for colour and depth, react to the cursor, and
-  dissolve/re-form between slides. One draw call; all motion runs on the GPU.
-- **Coverage globe** (`src/components/three/Globe.tsx`): dotted 3D Earth facing Africa with beacons.
-- **Tilt cards** (`src/components/Tilt.tsx`), CSS 3D orbit rings and perspective scroll reveals.
+- **Photo deck hero** (`src/components/HeroSlider.tsx`): the hero photos are a layered deck with
+  CSS 3D depth. Cards shuffle forward as slides change and lean slightly with the mouse.
+- **Tilt cards** (`src/components/Tilt.tsx`), CSS orbit rings and perspective scroll reveals.
 
-Performance: three.js loads as a separate chunk after the text is visible; scenes pause when off-screen
-or the tab is hidden; resolution is capped; reduced-motion users get a still frame; if WebGL is
-unavailable the hero falls back to the photo. Hero particle textures live in `src/assets/particles/`.
+Everything is CSS transforms only — no WebGL or 3D library — so it stays light on phones.
 
 ## Photos & logo
 

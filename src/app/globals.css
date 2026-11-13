@@ -177,14 +177,23 @@
 .orbit3d.alt { inset: -16%; transform: perspective(900px) rotateX(66deg) rotateY(24deg); }
 .orbit3d.alt > span { border-color: rgb(31 98 236 / .4); animation-duration: 22s; animation-direction: reverse; }
 
-/* Perspective grid floor */
-.grid-floor {
-  background-image: linear-gradient(to right, rgb(79 134 247 / .35) 1px, transparent 1px), linear-gradient(to bottom, rgb(79 134 247 / .35) 1px, transparent 1px);
-  background-size: 64px 64px; transform: perspective(520px) rotateX(64deg); transform-origin: center bottom;
-  animation: floor 5s linear infinite;
-  -webkit-mask-image: linear-gradient(to top, #000 5%, transparent 85%); mask-image: linear-gradient(to top, #000 5%, transparent 85%);
-}
-@keyframes floor { to { background-position: 0 64px; } }
+/* Hero photo deck */
+.deck { perspective: 1600px; }
+.deck-stage { transform-style: preserve-3d; transform: rotateY(calc(var(--px, 0) * 5deg)) rotateX(calc(var(--py, 0) * -4deg)); transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+.deck-card { position: absolute; inset: 0; transition: transform 1s cubic-bezier(.2,.75,.2,1), opacity 1s ease, filter 1s ease; will-change: transform; backface-visibility: hidden; }
+.deck-card[data-pos="0"] { transform: translate3d(0, 0, 0); opacity: 1; z-index: 30; }
+.deck-card[data-pos="1"] { transform: translate3d(20%, -9%, -120px) rotateY(-14deg) rotateZ(5deg) scale(.9); opacity: 1; z-index: 20; filter: saturate(.85) brightness(.7); }
+.deck-card[data-pos="2"] { transform: translate3d(-19%, 8%, -220px) rotateY(12deg) rotateZ(-6deg) scale(.84); opacity: 1; z-index: 10; filter: saturate(.7) brightness(.5); }
+.deck-float { transform: translate3d(calc(var(--px, 0) * var(--d, 14) * 1px), calc(var(--py, 0) * var(--d, 14) * 1px), 60px); transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+
+/* Aurora backdrop */
+.aurora { position: absolute; border-radius: 9999px; filter: blur(90px); opacity: .55; animation: aurora 16s ease-in-out infinite alternate; will-change: transform; }
+@keyframes aurora { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(6%, -8%, 0) scale(1.18); } }
+
+/* Signal bars */
+.bars span { display: block; width: 4px; border-radius: 2px; background: currentColor; animation: bars 1.4s ease-in-out infinite; transform-origin: bottom; }
+.bars span:nth-child(2) { animation-delay: .15s; } .bars span:nth-child(3) { animation-delay: .3s; } .bars span:nth-child(4) { animation-delay: .45s; }
+@keyframes bars { 0%, 100% { transform: scaleY(.45); opacity: .6; } 50% { transform: scaleY(1); opacity: 1; } }
 
 .reveal { opacity: 0; transform: perspective(1200px) translateY(36px) rotateX(-10deg) scale(0.985); transform-origin: center top; transition: opacity 0.8s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .reveal.is-visible { opacity: 1; transform: none; }

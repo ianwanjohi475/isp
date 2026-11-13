@@ -10,9 +10,7 @@ import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
 import { Hl, SectionTitle, CtaBand } from "@/components/Ui";
 import { Faq } from "@/components/Faq";
-import { particles } from "@/assets/particles";
 import { Tilt } from "@/components/Tilt";
-import { GlobeLazy } from "@/components/three/GlobeLazy";
 import { hotspotPlans, ksh, monthlyPlans, photos, planMessage, site, tvPlan, whatsappLink } from "@/lib/site";
 
 const quick = [
@@ -29,38 +27,38 @@ export default function Home() {
         slides={[
           {
             image: photos.cafeHotspot,
-            particles: particles.cafeHotspot,
-            focus: 0.36,
+            focus: "34% center",
             alt: "Customer browsing on SNET hotspot Wi-Fi at a market café",
             tag: "Hotspot Services",
             title: "Journey With Fast & Stable Internet",
             text: "Hotspot Wi-Fi from 1 Hour to 24 Hours with speeds up to 10 Mbps — right where you are.",
             price: "KSh 10",
             per: "1 Hour",
+            speed: "Up to 10 Mbps",
             href: "/packages#hotspot",
           },
           {
             image: photos.family,
-            particles: particles.family,
-            focus: 0.55,
+            focus: "50% center",
             alt: "Family enjoying SNET monthly internet at home",
             tag: "Monthly Services",
             title: "Bringing The World Closer To Our Communities",
             text: "Monthly internet at 8 Mbps, 10 Mbps and 15 Mbps for homes and businesses.",
             price: "KSh 1,500",
             per: "Month",
+            speed: "8 – 15 Mbps",
             href: "/packages#monthly",
           },
           {
             image: photos.tvMatch,
-            particles: particles.tvMatch,
-            focus: 0.5,
+            focus: "30% center",
             alt: "Friends watching football with SNET TV Binding",
             tag: "TV Binding Services",
             title: "Fast, Stable, Reliable Network",
             text: "TV Binding at 8 Mbps — stream on your TV for one monthly price.",
             price: "KSh 499",
             per: "Month",
+            speed: "8 Mbps",
             href: "/packages#tv",
           },
         ]}
@@ -272,7 +270,7 @@ export default function Home() {
                 Bringing the world closer to our communities — in rural areas, markets, entertainment joints and education centres,
                 one hotspot at a time.
               </p>
-              <GlobeLazy lite className="mx-auto mt-4 aspect-square w-full max-w-[380px]" fallback={<CoverageMap className="h-full w-full" />} />
+              <CoverageMap className="mx-auto mt-6 w-full max-w-[380px]" />
               <div className="mt-4 text-center">
                 <Link href="/contact#map" className="btn bg-[#16b26b] text-white hover:bg-navy-900">
                   <CheckCircle2 className="h-4 w-4" /> Check your network coverage
